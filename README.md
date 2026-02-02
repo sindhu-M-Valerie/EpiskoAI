@@ -1,3 +1,5 @@
+![EpiskoAI Logo](assets/logo.png)
+
 # EpiskoAI
 
 EpiskoAI — a vigilant AI agent that scouts Trust & Safety opportunities and filters signal from noise.
@@ -8,7 +10,7 @@ Meaning: From episkopos — “the watcher / overseer”
 
 ## What is EpiskoAI?
 
-EpiskoAI is a personal AI observer that continuously watches the web for high-signal Trust & Safety roles, filters out noise (moderation farms, vendors, spammy listings), scores roles for personal relevance, and delivers only the jobs you should care about.
+EpiskoAI is a personal AI observer that continuously watches the web for high-signal Trust & Safety roles, filters out noise (moderation farms, vendors, spammy listings), scores roles for personal relevance, and alerts you when something high-value appears.
 
 It behaves like a junior threat analyst whose only job is to watch the job market for you.
 
@@ -166,7 +168,7 @@ Goal: Given a job title and description, return a strict JSON object with catego
 
 System / Instruction (short):
 
-- You are an expert Trust & Safety systems analyst. Given a job title and full description, classify the role and extract structured signals. Only output valid JSON conforming to the schema below. Do not include extra commentary.
+- You are an expert Trust & Safety systems analyst. Given a job title and full description, classify the role and extract structured signals. Only output valid JSON conforming to the schema below. Do not include extra text or explanations.
 
 Example JSON schema expected:
 
@@ -193,7 +195,7 @@ Company: <company>
 Location: <location>
 Description: <full job description>
 
-Return JSON that follows the schema exactly. interpreter_score should be a float between 0.0 and 1.0 representing confidence that this role fits into Trust & Safety as classified. explanation should be a single sentence.
+Return JSON that follows the schema exactly. interpreter_score should be a float between 0.0 and 1.0 representing confidence that this role fits into Trust & Safety as classified. explanation should be tight and domain-relevant.
 ```
 
 Notes:
@@ -257,7 +259,7 @@ python episko/messenger.py
 
 ## Why I built this (short blurb)
 
-EpiskoAI is for people who care about Trust & Safety but are tired of noise and low-context job alerts. It codifies domain knowledge—what makes a role truly Trust & Safety—so you spend time applying to roles that value your hard-won expertise, not sifting spam.
+EpiskoAI is for people who care about Trust & Safety but are tired of noise and low-context job alerts. It codifies domain knowledge—what makes a role truly Trust & Safety—so you spend time applying, not filtering.
 
 ---
 
