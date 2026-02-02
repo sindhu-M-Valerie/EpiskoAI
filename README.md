@@ -1,6 +1,5 @@
-![_iMExf77szBNR7PKMJg-rfT8oM7d6sn3o46RxhBsO-uKpfvnc4T![Uploading _i![Uploading Screenshot 2026-02-02 at 1.33.51 PM.png…]()
-MExf77szBNR7PKMJg-rfT8oM7d6sn3o46RxhBsO-uKpfvnc4TijRaMz-0tZ4q4QO1swYLnhKaYgJT6ayYF7qPtH4TWglU2L_jEXveIHyQ.jpeg…]()
-ijRaMz-0tZ4q4QO1swYLnhKaYgJT6ayYF7qPtH4TWglU2L_jEXveIHyQ](https://github.com/user-attachments/assets/c53af715-2ff0-4954-83e9-6baef8f95ac2)
+
+<img width="254" height="353" alt="Screenshot 2026-02-02 at 1 33 51 PM" src="https://github.com/user-attachments/assets/670c62da-9ea0-47c5-a42e-5d269ca67c6e" />
 
 # EpiskoAI
 
