@@ -1,0 +1,1327 @@
+        function renderJobs(jobs) {
+            console.log('renderJobs called with', jobs.length, 'jobs');
+            const container = document.getElementById('jobsContainer');
+            console.log('Container element:', container);
+            
+            if (!container) {
+                console.error('jobsContainer element not found!');
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            if (jobs.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results" style="grid-column: 1/-1;">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>No matches found</h3>
+                        <p>Try adjusting your filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            jobs.forEach((job, index) => {
+                const scoreClass = job.fit >= 90 ? 'score-high' : job.fit >= 80 ? 'score-medium' : '';
+                const card = document.createElement('div');
+                card.className = 'job-card';
+                card.innerHTML = `
+                    <div class="job-card-header">
+                        <div class="company-name">${job.company}</div>
+                        <div class="job-title">${job.title}</div>
+                    </div>
+                    <div class="job-category">${job.category.replace('-', ' ').toUpperCase()}</div>
+                    <div class="job-description">${job.description}</div>
+                    <div class="job-meta">
+                        <span class="meta-item">📍 ${job.location}</span>
+                    </div>
+                    <div class="fit-score ${scoreClass}">${job.fit}% Fit</div>
+                    <div class="score-reasoning">${job.reason}</div>
+                    <button class="apply-btn" onclick="window.open('${job.applyUrl}', '_blank')">Apply Now ↗</button>
+                `;
+                container.appendChild(card);
+                if (index === 0) console.log('First card added:', job.company);
+            });
+            console.log('renderJobs finished, added', jobs.length, 'cards');
+        }
+
+        /* Main Content Area */
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Dashboard View */
+        .dashboard {
+            background: linear-gradient(180deg, #EBF8FF 0%, #D9F0FF 100%);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 120, 200, 0.1), 0 0 0 1px rgba(0, 120, 200, 0.08);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .poseidon-logo {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: sway 3s ease-in-out infinite;
+        }
+
+        .poseidon {
+            font-size: 100px;
+            filter: drop-shadow(0 4px 8px rgba(0, 102, 204, 0.3));
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: translateY(0) rotateZ(-2deg);
+            }
+            50% {
+                transform: translateY(-8px) rotateZ(2deg);
+            }
+        }
+
+        .dashboard h1 {
+            color: #0066CC;
+            font-size: 36px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .tagline {
+            color: #0066CC;
+            font-size: 14px;
+            font-style: italic;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .description {
+            color: #334455;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .status-box {
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(0, 102, 204, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(76, 175, 80, 0);
+            }
+        }
+
+        .status-text {
+            color: #334455;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0066CC;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #667788;
+            margin-top: 4px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.8);
+            color: #0066CC;
+            border: 2px solid #0066CC;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.15);
+        }
+
+        .features {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+
+        .feature-title {
+            color: #0066CC;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #334455;
+            font-size: 14px;
+        }
+
+        .feature-icon {
+            font-size: 18px;
+        }
+
+        /* Matches View */
+        .matches-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Table layout for matches */
+        .matches-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 6px 20px rgba(0,120,200,0.06);
+        }
+
+        .jobs-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        .jobs-table th,
+        .jobs-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #EEF4FB;
+            font-size: 14px;
+            color: #2f4352;
+            vertical-align: middle;
+        }
+
+        .jobs-table th {
+            background: rgba(230,245,255,0.8);
+            color: #0066CC;
+            font-weight: 700;
+            text-transform: none;
+            font-size: 13px;
+        }
+
+        .job-link {
+            color: #0066CC;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .apply-cell .apply-btn {
+            width: auto;
+            padding: 8px 12px;
+            font-size: 13px;
+            border-radius: 8px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+            color: white;
+        }
+
+        .status-active { background: #22c55e; }
+        .status-filled { background: #94a3b8; }
+
+        .job-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(0, 120, 200, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #0066CC;
+        }
+
+        .job-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 120, 200, 0.15);
+        }
+
+        .job-card-header {
+            margin-bottom: 12px;
+        }
+
+        .company-name {
+            font-size: 12px;
+            color: #667788;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .job-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0066CC;
+            margin-bottom: 4px;
+        }
+
+        .job-category {
+            display: inline-block;
+            background: #E0F4FF;
+            color: #0066CC;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .job-description {
+            font-size: 14px;
+            color: #445566;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: #667788;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .fit-score {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .score-high {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+
+        .score-medium {
+            background: linear-gradient(135deg, #FFA500 0%, #ff9500 100%);
+        }
+
+        .score-reasoning {
+            font-size: 13px;
+            color: #667788;
+            font-style: italic;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #E0E8F0;
+        }
+
+        .apply-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .apply-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Settings Styles */
+        .settings-container {
+            background: linear-gradient(180deg, #EBF8FF 0%, #D9F0FF 100%);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 120, 200, 0.1), 0 0 0 1px rgba(0, 120, 200, 0.08);
+            padding: 40px;
+        }
+
+        .settings-container h2 {
+            color: #0066CC;
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .settings-section {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-left: 4px solid #0066CC;
+        }
+
+        .settings-section h3 {
+            color: #0066CC;
+            font-size: 16px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .setting-group {
+            margin-bottom: 16px;
+        }
+
+        .setting-group label {
+            display: block;
+            color: #334455;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .setting-group input[type="text"],
+        .setting-group input[type="email"],
+        .setting-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #E0E8F0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #334455;
+            transition: all 0.3s ease;
+        }
+
+        .setting-group input[type="text"]:focus,
+        .setting-group input[type="email"]:focus,
+        .setting-group select:focus {
+            outline: none;
+            border-color: #0066CC;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .setting-group input[type="range"] {
+            width: calc(100% - 60px);
+            vertical-align: middle;
+            margin-right: 12px;
+        }
+
+        #fitScoreDisplay {
+            color: #0066CC;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #334455;
+            font-size: 14px;
+        }
+
+        .checkbox input {
+            cursor: pointer;
+            accent-color: #0066CC;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            color: #334455;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .toggle-input {
+            display: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            background: #E0E8F0;
+            border-radius: 14px;
+            transition: background 0.3s ease;
+            display: inline-block;
+        }
+
+        .toggle-input:checked + .toggle-switch {
+            background: #4CAF50;
+        }
+
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-input:checked + .toggle-switch::before {
+            left: 24px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .settings-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 16px;
+            border: 2px solid #0066CC;
+            background: white;
+            color: #0066CC;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .settings-btn:hover {
+            background: #0066CC;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .settings-btn.danger {
+            border-color: #E74C3C;
+            color: #E74C3C;
+        }
+
+        .settings-btn.danger:hover {
+            background: #E74C3C;
+            color: white;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.3);
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.8);
+            color: #0066CC;
+            border: 2px solid #0066CC;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #0066CC;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .matches-header {
+            margin-bottom: 20px;
+        }
+
+        .matches-header h2 {
+            color: #0066CC;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .matches-count {
+            color: #667788;
+            font-size: 14px;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #667788;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #0066CC;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #667788;
+        }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-nav">
+            <h1 onclick="showDashboard()" style="cursor: pointer;">
+                <span class="logo-icon">🔱</span>
+                EpiskoAI
+            </h1>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="showDashboard()">Dashboard</button>
+                <button class="nav-btn" onclick="showMatches()">My Matches</button>
+                <button class="nav-btn" onclick="showCompanies()">250 Companies</button>
+                <button class="nav-btn" onclick="showSettings()">Settings</button>
+            </div>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboard" class="content active">
+            <div class="dashboard">
+                <div class="header">
+                    <div class="poseidon-logo">
+                        <div class="poseidon">🔱</div>
+                    </div>
+                    <h1>EpiskoAI</h1>
+                    <p class="tagline">from episkopos — "the watcher / overseer"</p>
+                </div>
+
+                <div class="description">
+                    Your personal AI observer for Trust & Safety opportunities. We filter the noise, surface the signal.
+                </div>
+
+                <div class="status-box">
+                    <div class="status-indicator">
+                        <div class="dot"></div>
+                        <span class="status-text">Agent Active & Watching</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">3,247</div>
+                            <div class="stat-label">Jobs Scanned</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">High-Fit Matches</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <button class="btn-primary" onclick="showMatches()">View My Matches</button>
+                    <button class="btn-secondary">Settings</button>
+                </div>
+
+                <div class="features">
+                    <div class="feature-title">How EpiskoAI Works</div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">🔍</span>
+                            <span><strong>The Watcher:</strong> Discovers roles across boards, career pages, and ATS platforms</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🧠</span>
+                            <span><strong>The Interpreter:</strong> Classifies and scores using Trust & Safety expertise</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎯</span>
+                            <span><strong>The Matcher:</strong> Ranks by relevance to your profile and preferences</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📬</span>
+                            <span><strong>The Messenger:</strong> Delivers alerts via your preferred channels</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matches View -->
+        <div id="matches" class="content">
+            <div style="background: linear-gradient(180deg, #EBF8FF 0%, #D9F0FF 100%); border-radius: 24px; padding: 40px; box-shadow: 0 20px 60px rgba(0, 120, 200, 0.1);">
+                <div class="matches-header">
+                    <h2>Your Matches</h2>
+                    <p class="matches-count">156 high-fit opportunities ranked by relevance</p>
+                </div>
+
+                <div class="filters">
+                    <button class="filter-btn active" onclick="filterMatches('all', this)">All Matches</button>
+                    <button class="filter-btn" onclick="filterMatches('trust-safety', this)">Trust & Safety Ops</button>
+                    <button class="filter-btn" onclick="filterMatches('threat-intel', this)">Threat Intel</button>
+                    <button class="filter-btn" onclick="filterMatches('abuse-fraud', this)">Abuse/Fraud</button>
+                    <button class="filter-btn" onclick="filterMatches('policy', this)">Policy</button>
+                    <button class="filter-btn" onclick="filterMatches('engineering', this)">Safety Engineering</button>
+                </div>
+
+                <div id="jobsContainer" class="matches-container"></div>
+            </div>
+        </div>
+
+        <!-- 250 Companies View -->
+        <div id="companies" class="content">
+            <div class="matches-container">
+                <h2>250 Companies Directory</h2>
+                <p style="color: #666; margin-bottom: 2rem;">Direct links to company websites and career pages</p>
+                
+                <div style="margin-bottom: 2rem;">
+                    <input type="text" id="companySearch" placeholder="🔍 Search companies..." 
+                           style="width: 100%; padding: 12px 20px; border: 2px solid #E0E7FF; border-radius: 12px; font-size: 16px;"
+                           oninput="filterCompanies(this.value)">
+                </div>
+                
+                <div id="companiesContainer"></div>
+            </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="settings" class="content">
+            <div class="settings-container">
+                <h2>Settings & Preferences</h2>
+                
+                <div class="settings-section">
+                    <h3>Profile Information</h3>
+                    <div class="setting-group">
+                        <label>Full Name</label>
+                        <input type="text" value="Your Name" placeholder="Enter your full name">
+                    </div>
+                    <div class="setting-group">
+                        <label>Email</label>
+                        <input type="email" value="you@example.com" placeholder="Enter your email">
+                    </div>
+                    <div class="setting-group">
+                        <label>Current Role</label>
+                        <input type="text" value="Trust & Safety Manager" placeholder="Your current role">
+                    </div>
+                    <div class="setting-group">
+                        <label>Experience Level</label>
+                        <select>
+                            <option selected>Senior (7+ years)</option>
+                            <option>Mid-level (3-6 years)</option>
+                            <option>Junior (0-2 years)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Job Preferences</h3>
+                    <div class="setting-group">
+                        <label>Preferred Categories</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox"><input type="checkbox" checked> Trust & Safety Ops</label>
+                            <label class="checkbox"><input type="checkbox" checked> Threat Intelligence</label>
+                            <label class="checkbox"><input type="checkbox"> Abuse/Fraud</label>
+                            <label class="checkbox"><input type="checkbox" checked> Policy</label>
+                            <label class="checkbox"><input type="checkbox" checked> Safety Engineering</label>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label>Minimum Fit Score (%)</label>
+                        <input type="range" min="0" max="100" value="80" step="5">
+                        <span id="fitScoreDisplay">80%</span>
+                    </div>
+                    <div class="setting-group">
+                        <label>Work Location Preference</label>
+                        <select>
+                            <option>Remote First</option>
+                            <option>Remote Preferred</option>
+                            <option selected>Open to All</option>
+                            <option>On-site</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Notification Settings</h3>
+                    <div class="setting-group">
+                        <label class="toggle-label">
+                            <input type="checkbox" checked class="toggle-input">
+                            <span class="toggle-switch"></span>
+                            Email Alerts for High-Fit Matches
+                        </label>
+                    </div>
+                    <div class="setting-group">
+                        <label class="toggle-label">
+                            <input type="checkbox" checked class="toggle-input">
+                            <span class="toggle-switch"></span>
+                            Daily Job Digest
+                        </label>
+                    </div>
+                    <div class="setting-group">
+                        <label class="toggle-label">
+                            <input type="checkbox" class="toggle-input">
+                            <span class="toggle-switch"></span>
+                            Weekly Summary Report
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Integration & Export</h3>
+                    <div class="button-group">
+                        <button class="settings-btn">Connect Slack</button>
+                        <button class="settings-btn">Connect Email</button>
+                        <button class="settings-btn">Export to CSV</button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Account Settings</h3>
+                    <div class="button-group">
+                        <button class="settings-btn danger">Change Password</button>
+                        <button class="settings-btn danger">Logout</button>
+                    </div>
+                </div>
+
+                <button class="save-btn" onclick="saveSettings()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>EpiskoAI — Scanning the job market so you don't have to. <a href="#">Learn more</a></p>
+    </footer>
+
+    <script>
+        // Sample job data with 100+ companies
+        const jobData = [
+            // Major Tech Companies
+            { company: "Meta", title: "Trust & Safety Operations Manager", category: "trust-safety", description: "Lead team managing community standards enforcement at scale.", location: "Menlo Park, CA", fit: 95, reason: "Perfect match for your seniority and T&S background", applyUrl: "https://www.metacareers.com/jobs/search/?q=trust%20safety" },
+            { company: "Google", title: "Senior Threat Intelligence Analyst", category: "threat-intel", description: "Analyze emerging threats and coordinate with law enforcement.", location: "Mountain View, CA", fit: 92, reason: "Strong alignment with investigations experience", applyUrl: "https://careers.google.com/jobs/results/?q=threat%20intelligence" },
+            { company: "Amazon", title: "Content Moderation Lead", category: "abuse-fraud", description: "Oversee moderation systems across marketplace and media.", location: "Seattle, WA", fit: 88, reason: "Matches your ecommerce fraud detection background", applyUrl: "https://www.amazon.jobs/search?q=content%20moderation" },
+            { company: "Microsoft", title: "Safety Engineering Manager", category: "engineering", description: "Build detection systems for harmful content and abuse.", location: "Redmond, WA", fit: 91, reason: "Engineering-forward approach aligns with your technical background", applyUrl: "https://careers.microsoft.com/search?q=safety%20engineering" },
+            { company: "Apple", title: "Trust & Safety Policy Specialist", category: "policy", description: "Develop policies for app ecosystem abuse prevention.", location: "Cupertino, CA", fit: 89, reason: "Policy expertise matches requirements", applyUrl: "https://jobs.apple.com/search?q=trust%20safety" },
+            { company: "YouTube (Google)", title: "Abuse Prevention Operations Manager", category: "trust-safety", description: "Manage abuse prevention across video platform.", location: "San Bruno, CA", fit: 94, reason: "Video platform experience directly applicable", applyUrl: "https://careers.google.com/jobs/results/?q=abuse%20prevention" },
+            { company: "Discord", title: "Trust & Safety Manager", category: "trust-safety", description: "Build and scale Trust & Safety operations for gaming platform.", location: "San Francisco, CA", fit: 93, reason: "Perfect for community-first platform background", applyUrl: "https://discord.com/jobs/search?q=trust%20safety" },
+            { company: "Roblox", title: "Safety Operations Lead", category: "trust-safety", description: "Protect young users on gaming platform.", location: "San Mateo, CA", fit: 90, reason: "Child safety expertise required", applyUrl: "https://jobs.roblox.com/search?q=safety" },
+            { company: "Snapchat", title: "Trust & Safety Analyst", category: "abuse-fraud", description: "Investigate and prevent harmful content on visual messaging platform.", location: "Santa Monica, CA", fit: 87, reason: "Visual content moderation experience", applyUrl: "https://careers.snap.com/search?q=trust%20safety" },
+            { company: "TikTok", title: "Trust & Safety Operations Manager", category: "trust-safety", description: "Manage moderation operations for short-form video.", location: "Los Angeles, CA", fit: 91, reason: "Large-scale operations at global platform", applyUrl: "https://careers.tiktok.com/search?q=trust%20safety" },
+            
+            // Financial & Crypto
+            { company: "Stripe", title: "Fraud Detection Manager", category: "abuse-fraud", description: "Build systems to prevent payment fraud and abuse.", location: "San Francisco, CA", fit: 89, reason: "Fintech fraud prevention background", applyUrl: "https://stripe.com/jobs/search?q=fraud" },
+            { company: "Coinbase", title: "Trust & Safety Operations Lead", category: "trust-safety", description: "Manage compliance and abuse prevention in crypto exchange.", location: "San Francisco, CA", fit: 86, reason: "Crypto compliance experience valued", applyUrl: "https://coinbase.com/careers?q=trust%20safety" },
+            { company: "Kraken", title: "Abuse Prevention Specialist", category: "abuse-fraud", description: "Prevent money laundering and fraudulent activity.", location: "San Francisco, CA", fit: 84, reason: "AML/CFT expertise", applyUrl: "https://kraken.com/careers?q=aml" },
+            { company: "Gemini", title: "Trust & Safety Manager", category: "trust-safety", description: "Oversee compliance and safety operations for crypto platform.", location: "New York, NY", fit: 85, reason: "Regulatory expertise in crypto", applyUrl: "https://gemini.com/careers?q=compliance" },
+            { company: "Brex", title: "Fraud Prevention Operations Lead", category: "abuse-fraud", description: "Manage fraud prevention at scale for financial platform.", location: "San Francisco, CA", fit: 88, reason: "B2B fraud prevention background", applyUrl: "https://brex.com/careers?q=fraud" },
+            
+            // Startups - Security & Compliance
+            { company: "ALICE", title: "Trust & Safety Operations Lead", category: "trust-safety", description: "Build safety operations for AI safety platform.", location: "Remote", fit: 92, reason: "AI safety intersection with Trust & Safety", applyUrl: "https://aliceai.com/careers" },
+            { company: "Immunefi", title: "Trust & Safety Manager", category: "threat-intel", description: "Manage bug bounty and threat intelligence operations.", location: "Remote", fit: 90, reason: "Security research background alignment", applyUrl: "https://immunefi.com/careers" },
+            { company: "Chainalysis", title: "Threat Intelligence Analyst", category: "threat-intel", description: "Analyze blockchain threats and illicit activity.", location: "Remote", fit: 88, reason: "Crypto threat intel expertise", applyUrl: "https://chainalysis.com/careers" },
+            { company: "CertiK", title: "Abuse Prevention Engineer", category: "engineering", description: "Build systems to prevent smart contract exploits.", location: "Remote", fit: 85, reason: "Technical security background", applyUrl: "https://certik.com/careers" },
+            { company: "Censys", title: "Trust & Safety Operations", category: "threat-intel", description: "Manage data and threat intelligence operations.", location: "Ann Arbor, MI", fit: 87, reason: "Infrastructure threat intelligence", applyUrl: "https://censys.io/careers" },
+            
+            // Social Platforms
+            { company: "Twitter/X", title: "Senior Trust & Safety Manager", category: "trust-safety", description: "Lead trust and safety operations at scale.", location: "San Francisco, CA", fit: 93, reason: "Large-scale content moderation platform", applyUrl: "https://careers.twitter.com/search?q=trust%20safety" },
+            { company: "Reddit", title: "Safety Operations Manager", category: "trust-safety", description: "Oversee community safety across subreddits.", location: "San Francisco, CA", fit: 89, reason: "Community moderation at scale", applyUrl: "https://reddit.com/careers/search?q=safety" },
+            { company: "Nextdoor", title: "Trust & Safety Lead", category: "trust-safety", description: "Manage safety for hyperlocal social network.", location: "San Francisco, CA", fit: 86, reason: "Neighborhood safety focus", applyUrl: "https://nextdoor.com/careers/search?q=safety" },
+            { company: "BeReal", title: "Content Moderation Manager", category: "abuse-fraud", description: "Prevent abuse on authentic social platform.", location: "Remote", fit: 82, reason: "Emerging platform opportunity", applyUrl: "https://bereal.com/careers" },
+            { company: "Bluesky", title: "Trust & Safety Operations Specialist", category: "trust-safety", description: "Build safety systems for decentralized social network.", location: "Remote", fit: 88, reason: "Novel platform architecture", applyUrl: "https://bsky.social/careers" },
+            
+            // Messaging & Comms
+            { company: "Signal", title: "Trust & Safety Lead", category: "trust-safety", description: "Manage abuse prevention for encrypted messaging platform.", location: "Remote", fit: 85, reason: "Privacy-focused platform", applyUrl: "https://signal.org/careers" },
+            { company: "Telegram", title: "Abuse Prevention Manager", category: "abuse-fraud", description: "Prevent bot abuse and terrorism financing.", location: "Remote", fit: 83, reason: "Scale and complexity of platform", applyUrl: "https://telegram.org/careers" },
+            { company: "WhatsApp", title: "Safety Operations Manager", category: "trust-safety", description: "Manage safety for 2B+ user messaging platform.", location: "Mountain View, CA", fit: 91, reason: "Massive scale messaging platform", applyUrl: "https://whatsapp.com/careers" },
+            { company: "Slack", title: "Workspace Safety Manager", category: "trust-safety", description: "Prevent abuse in enterprise messaging.", location: "San Francisco, CA", fit: 87, reason: "Enterprise safety focus", applyUrl: "https://slack.com/careers/search?q=safety" },
+            
+            // Marketplace & Commerce
+            { company: "Airbnb", title: "Trust & Safety Operations Lead", category: "trust-safety", description: "Protect guests and hosts on global marketplace.", location: "San Francisco, CA", fit: 90, reason: "Marketplace safety expertise", applyUrl: "https://airbnb.com/careers/search?q=trust%20safety" },
+            { company: "Uber", title: "Safety Operations Manager", category: "trust-safety", description: "Manage safety for rideshare and delivery platforms.", location: "San Francisco, CA", fit: 89, reason: "Two-sided marketplace safety", applyUrl: "https://uber.com/careers/search?q=safety" },
+            { company: "eBay", title: "Fraud Prevention Lead", category: "abuse-fraud", description: "Prevent counterfeit and fraudulent sales.", location: "San Jose, CA", fit: 88, reason: "E-commerce fraud expertise", applyUrl: "https://ebayinc.com/careers/search?q=fraud" },
+            { company: "Etsy", title: "Trust & Safety Manager", category: "trust-safety", description: "Protect marketplace against counterfeit and IP abuse.", location: "Brooklyn, NY", fit: 86, reason: "Creative marketplace focus", applyUrl: "https://etsy.com/careers/search?q=trust%20safety" },
+            { company: "Shopify", title: "Abuse Prevention Specialist", category: "abuse-fraud", description: "Prevent fraud and abuse across merchant ecosystem.", location: "Toronto, Canada", fit: 87, reason: "Merchant platform safety", applyUrl: "https://shopify.com/careers/search?q=abuse" },
+            
+            // Streaming & Media
+            { company: "Netflix", title: "Content Safety Manager", category: "abuse-fraud", description: "Ensure platform safety and account security.", location: "Los Gatos, CA", fit: 85, reason: "Media platform experience", applyUrl: "https://netflix.com/careers/search?q=safety" },
+            { company: "Twitch", title: "Trust & Safety Operations Manager", category: "trust-safety", description: "Manage moderation at scale for live streaming.", location: "San Francisco, CA", fit: 92, reason: "Live streaming platform expertise", applyUrl: "https://jobs.twitch.tv/" },
+            { company: "Kick", title: "Safety Operations Lead", category: "trust-safety", description: "Build safety ops for growing streaming platform.", location: "Remote", fit: 88, reason: "Emerging platform opportunity", applyUrl: "https://kick.com/careers" },
+            { company: "Rumble", title: "Trust & Safety Manager", category: "trust-safety", description: "Manage safety for video platform.", location: "Remote", fit: 84, reason: "Platform growth phase", applyUrl: "https://rumble.com/careers" },
+            
+            // Dating & Relationships
+            { company: "Tinder", title: "Safety Operations Manager", category: "trust-safety", description: "Protect users on dating platform from harassment and fraud.", location: "West Hollywood, CA", fit: 87, reason: "Dating platform safety", applyUrl: "https://www.match.com/careers" },
+            { company: "Bumble", title: "Trust & Safety Lead", category: "trust-safety", description: "Manage safety for women-first dating platform.", location: "Austin, TX", fit: 86, reason: "Gender-focused safety approach", applyUrl: "https://www.bumble.com/careers" },
+            { company: "Hinge", title: "Safety Operations Specialist", category: "trust-safety", description: "Prevent abuse on relationship-focused platform.", location: "New York, NY", fit: 85, reason: "Niche dating platform", applyUrl: "https://www.match.com/careers" },
+            
+            // Fitness & Wellness
+            { company: "Peloton", title: "Community Safety Manager", category: "trust-safety", description: "Manage safety in fitness community.", location: "New York, NY", fit: 81, reason: "Niche community platform", applyUrl: "https://www.pelotoncorp.com/careers" },
+            { company: "ClassPass", title: "Trust & Safety Operations", category: "trust-safety", description: "Prevent abuse in wellness marketplace.", location: "New York, NY", fit: 80, reason: "Wellness platform", applyUrl: "https://www.classpass.com/careers" },
+            
+            // Gaming Platforms (Second set - with updated ATS)
+            { company: "Riot Games", title: "Player Safety Manager", category: "trust-safety", description: "Combat toxicity and cheating in League of Legends.", location: "Los Angeles, CA", fit: 89, reason: "Gaming safety excellence", applyUrl: "https://www.riotgames.com/careers" },
+            { company: "Valve", title: "Trust & Safety Operations", category: "trust-safety", description: "Manage abuse prevention across Steam ecosystem.", location: "Bellevue, WA", fit: 88, reason: "Gaming marketplace scale", applyUrl: "https://www.valvesoftware.com/careers/" },
+            { company: "Epic Games", title: "Online Safety Manager", category: "trust-safety", description: "Protect Fortnite players from harassment and abuse.", location: "Cary, NC", fit: 87, reason: "Youth gaming safety", applyUrl: "https://www.epicgames.com/careers" },
+            { company: "Activision Blizzard", title: "Safety Operations Lead", category: "trust-safety", description: "Manage safety across multiple game titles.", location: "Irvine, CA", fit: 86, reason: "Multi-title gaming platform", applyUrl: "https://careers.activisionblizzard.com/" },
+            
+            // Creator Economy
+            { company: "Patreon", title: "Trust & Safety Manager", category: "trust-safety", description: "Prevent fraud and abuse in creator payment platform.", location: "San Francisco, CA", fit: 84, reason: "Creator economy safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Patreon%20trust%20safety&location=San%20Francisco" },
+            { company: "OnlyFans", title: "Content Safety Specialist", category: "abuse-fraud", description: "Manage adult content safety and prevent exploitation.", location: "London, UK", fit: 82, reason: "Adult content moderation", applyUrl: "https://www.linkedin.com/jobs/search?keywords=OnlyFans%20content%20safety&location=London" },
+            { company: "Substack", title: "Trust & Safety Operations", category: "trust-safety", description: "Manage newsletter platform safety and abuse prevention.", location: "New York, NY", fit: 83, reason: "Publishing platform safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Substack%20publishing%20safety&location=New%20York" },
+            
+            // AI & ML Platforms
+            { company: "Anthropic", title: "AI Safety & Policy Manager", category: "policy", description: "Develop policies for safe AI deployment.", location: "San Francisco, CA", fit: 90, reason: "AI safety policy development", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Anthropic%20AI%20safety&location=San%20Francisco" },
+            { company: "OpenAI", title: "Trust & Safety Manager", category: "trust-safety", description: "Manage safety for ChatGPT and API platform.", location: "San Francisco, CA", fit: 91, reason: "AI safety at scale", applyUrl: "https://www.linkedin.com/jobs/search?keywords=OpenAI%20trust%20safety&location=San%20Francisco" },
+            { company: "Hugging Face", title: "Safety & Policy Lead", category: "policy", description: "Manage safety in open-source AI community.", location: "New York, NY", fit: 86, reason: "Open-source AI safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Hugging%20Face%20AI%20safety&location=New%20York" },
+            { company: "Stability AI", title: "Trust & Safety Operations", category: "trust-safety", description: "Prevent harmful outputs from generative models.", location: "London, UK", fit: 85, reason: "Generative AI safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Stability%20AI%20safety&location=London" },
+            
+            // Financial Services
+            { company: "PayPal", title: "Fraud Prevention Manager", category: "abuse-fraud", description: "Combat fraud across payments ecosystem.", location: "San Jose, CA", fit: 89, reason: "Payments fraud prevention", applyUrl: "https://www.linkedin.com/jobs/search?keywords=PayPal%20fraud%20prevention&location=San%20Jose" },
+            { company: "Square", title: "Trust & Safety Operations Lead", category: "trust-safety", description: "Manage safety for merchant payment platform.", location: "San Francisco, CA", fit: 88, reason: "Payments platform safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Square%20payment%20safety&location=San%20Francisco" },
+            { company: "Wise", title: "Compliance & Safety Manager", category: "policy", description: "Ensure AML/CFT compliance for money transfer platform.", location: "London, UK", fit: 86, reason: "International payments compliance", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Wise%20compliance%20safety&location=London" },
+            
+            // Non-profits & Standards
+            { company: "Internet Watch Foundation", title: "Analyst - Child Safety", category: "abuse-fraud", description: "Investigate child exploitation reports online.", location: "Cambridge, UK", fit: 84, reason: "Child safety mission", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Internet%20Watch%20Foundation%20child%20safety&location=Cambridge" },
+            { company: "NCMEC", title: "Threat Intelligence Analyst", category: "threat-intel", description: "Investigate child sexual abuse material.", location: "Washington, DC", fit: 83, reason: "Child protection mission", applyUrl: "https://www.linkedin.com/jobs/search?keywords=NCMEC%20child%20protection&location=Washington" },
+            { company: "Global Internet Forum (GIFCT)", title: "Policy & Safety Manager", category: "policy", description: "Coordinate cross-platform safety initiatives.", location: "San Francisco, CA", fit: 85, reason: "Multi-stakeholder coordination", applyUrl: "https://www.linkedin.com/jobs/search?keywords=GIFCT%20policy%20safety&location=San%20Francisco" },
+            
+            // Emerging Platforms
+            { company: "Threads", title: "Trust & Safety Operations", category: "trust-safety", description: "Manage safety for text-based social platform.", location: "Menlo Park, CA", fit: 91, reason: "Twitter alternative opportunity", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Threads%20trust%20safety&location=Menlo%20Park" },
+            { company: "Mastodon", title: "Safety & Moderation Lead", category: "trust-safety", description: "Support decentralized social network moderation.", location: "Remote", fit: 82, reason: "Federated platform approach", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Mastodon%20moderation&location=Remote" },
+            
+            // Professional Networks
+            { company: "LinkedIn", title: "Trust & Safety Manager", category: "trust-safety", description: "Protect professional network from spam and fraud.", location: "Sunnyvale, CA", fit: 88, reason: "Professional network safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=LinkedIn%20trust%20safety&location=Sunnyvale" },
+            
+            // Travel & Booking
+            { company: "Booking.com", title: "Safety Operations Manager", category: "trust-safety", description: "Prevent fraud and abuse in travel platform.", location: "Amsterdam, Netherlands", fit: 86, reason: "Travel marketplace safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Booking.com%20safety&location=Amsterdam" },
+            { company: "Expedia", title: "Trust & Safety Lead", category: "trust-safety", description: "Manage safety across multiple travel properties.", location: "Seattle, WA", fit: 85, reason: "Travel industry expertise", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Expedia%20trust%20safety&location=Seattle" },
+            
+            // Education
+            { company: "Coursera", title: "Safety & Integrity Manager", category: "trust-safety", description: "Prevent fraud and maintain academic integrity.", location: "Mountain View, CA", fit: 84, reason: "EdTech platform safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Coursera%20safety%20integrity&location=Mountain%20View" },
+            { company: "Duolingo", title: "Community Safety Manager", category: "trust-safety", description: "Manage safety in language learning community.", location: "Pittsburgh, PA", fit: 82, reason: "Community-driven learning", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Duolingo%20community%20safety&location=Pittsburgh" },
+            
+            // Consulting & Services
+            { company: "Deloitte", title: "Trust & Safety Consulting Lead", category: "policy", description: "Advise clients on safety strategy and operations.", location: "Multiple", fit: 81, reason: "Advisory role opportunity", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Deloitte%20trust%20safety%20consulting" },
+            { company: "Accenture", title: "Trust & Safety Transformation Manager", category: "trust-safety", description: "Lead T&S modernization initiatives for enterprise clients.", location: "Multiple", fit: 80, reason: "Enterprise transformation", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Accenture%20trust%20safety%20transformation" },
+            
+            // Additional Startups
+            { company: "Figma", title: "Safety & Abuse Prevention Manager", category: "trust-safety", description: "Prevent IP theft and abuse on design platform.", location: "San Francisco, CA", fit: 83, reason: "Creative platform safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Figma%20design%20safety&location=San%20Francisco" },
+            { company: "Notion", title: "Trust & Safety Operations", category: "trust-safety", description: "Manage abuse prevention for workspace platform.", location: "San Francisco, CA", fit: 82, reason: "Productivity platform safety", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Notion%20workspace%20safety&location=San%20Francisco" },
+            { company: "Canva", title: "Safety Operations Lead", category: "trust-safety", description: "Protect design platform from IP and abuse issues.", location: "Sydney, Australia", fit: 82, reason: "Design platform at scale", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Canva%20design%20safety&location=Sydney" },
+            { company: "Figma", title: "Policy & Safety Manager", category: "policy", description: "Develop safety policies for design collaboration.", location: "San Francisco, CA", fit: 81, reason: "Policy development focus", applyUrl: "https://www.linkedin.com/jobs/search?keywords=Figma%20policy%20safety&location=San%20Francisco" },
+            
+            // Streaming & Media
+            { company: "Netflix", title: "Content Safety Manager", category: "abuse-fraud", description: "Ensure platform safety and account security.", location: "Los Gatos, CA", fit: 85, reason: "Media platform experience", applyUrl: "https://netflix.com/careers/search?q=safety" },
+            { company: "Twitch", title: "Trust & Safety Operations Manager", category: "trust-safety", description: "Manage moderation at scale for live streaming.", location: "San Francisco, CA", fit: 92, reason: "Live streaming platform expertise", applyUrl: "https://jobs.twitch.tv/search?q=moderation" },
+            { company: "Kick", title: "Safety Operations Lead", category: "trust-safety", description: "Build safety ops for growing streaming platform.", location: "Remote", fit: 88, reason: "Emerging platform opportunity", applyUrl: "https://kick.com/careers/search?q=safety" },
+            { company: "Rumble", title: "Trust & Safety Manager", category: "trust-safety", description: "Manage safety for video platform.", location: "Remote", fit: 84, reason: "Platform growth phase", applyUrl: "https://rumble.com/careers/search?q=safety" },
+            
+            // Dating & Relationships
+            { company: "Tinder", title: "Safety Operations Manager", category: "trust-safety", description: "Protect users on dating platform from harassment and fraud.", location: "West Hollywood, CA", fit: 87, reason: "Dating platform safety", applyUrl: "https://match.com/careers/search?q=safety" },
+            { company: "Bumble", title: "Trust & Safety Lead", category: "trust-safety", description: "Manage safety for women-first dating platform.", location: "Austin, TX", fit: 86, reason: "Gender-focused safety approach", applyUrl: "https://bumble.com/careers/search?q=safety" },
+            { company: "Hinge", title: "Safety Operations Specialist", category: "trust-safety", description: "Prevent abuse on relationship-focused platform.", location: "New York, NY", fit: 85, reason: "Niche dating platform", applyUrl: "https://match.com/careers/search?q=safety" },
+            
+            // Fitness & Wellness
+            { company: "Peloton", title: "Community Safety Manager", category: "trust-safety", description: "Manage safety in fitness community.", location: "New York, NY", fit: 81, reason: "Niche community platform", applyUrl: "https://pelotoncorp.com/careers/search?q=safety" },
+            { company: "ClassPass", title: "Trust & Safety Operations", category: "trust-safety", description: "Prevent abuse in wellness marketplace.", location: "New York, NY", fit: 80, reason: "Wellness platform", applyUrl: "https://classpass.com/careers/search?q=safety" },
+            
+            // Gaming Platforms
+            { company: "Riot Games", title: "Player Safety Manager", category: "trust-safety", description: "Combat toxicity and cheating in League of Legends.", location: "Los Angeles, CA", fit: 89, reason: "Gaming safety excellence", applyUrl: "https://riotgames.com/careers/search?q=safety" },
+            { company: "Valve", title: "Trust & Safety Operations", category: "trust-safety", description: "Manage abuse prevention across Steam ecosystem.", location: "Bellevue, WA", fit: 88, reason: "Gaming marketplace scale", applyUrl: "https://valvesoftware.com/careers/search?q=safety" },
+            { company: "Epic Games", title: "Online Safety Manager", category: "trust-safety", description: "Protect Fortnite players from harassment and abuse.", location: "Cary, NC", fit: 87, reason: "Youth gaming safety", applyUrl: "https://epicgames.com/careers/search?q=safety" },
+            { company: "Activision Blizzard", title: "Safety Operations Lead", category: "trust-safety", description: "Manage safety across multiple game titles.", location: "Irvine, CA", fit: 86, reason: "Multi-title gaming platform", applyUrl: "https://careers.activisionblizzard.com/search?q=safety" },
+            
+            // Creator Economy
+            { company: "Patreon", title: "Trust & Safety Manager", category: "trust-safety", description: "Prevent fraud and abuse in creator payment platform.", location: "San Francisco, CA", fit: 84, reason: "Creator economy safety", applyUrl: "https://patreon.com/careers/search?q=safety" },
+            { company: "OnlyFans", title: "Content Safety Specialist", category: "abuse-fraud", description: "Manage adult content safety and prevent exploitation.", location: "London, UK", fit: 82, reason: "Adult content moderation", applyUrl: "https://onlyfans.com/careers/search?q=safety" },
+            { company: "Substack", title: "Trust & Safety Operations", category: "trust-safety", description: "Manage newsletter platform safety and abuse prevention.", location: "New York, NY", fit: 83, reason: "Publishing platform safety", applyUrl: "https://substack.com/careers/search?q=safety" },
+            
+            // AI & ML Platforms
+            { company: "Anthropic", title: "AI Safety & Policy Manager", category: "policy", description: "Develop policies for safe AI deployment.", location: "San Francisco, CA", fit: 90, reason: "AI safety policy development", applyUrl: "https://anthropic.com/careers/search?q=safety" },
+            { company: "OpenAI", title: "Trust & Safety Manager", category: "trust-safety", description: "Manage safety for ChatGPT and API platform.", location: "San Francisco, CA", fit: 91, reason: "AI safety at scale", applyUrl: "https://openai.com/careers/search?q=safety" },
+            { company: "Hugging Face", title: "Safety & Policy Lead", category: "policy", description: "Manage safety in open-source AI community.", location: "New York, NY", fit: 86, reason: "Open-source AI safety", applyUrl: "https://huggingface.co/jobs/search?q=safety" },
+            { company: "Stability AI", title: "Trust & Safety Operations", category: "trust-safety", description: "Prevent harmful outputs from generative models.", location: "London, UK", fit: 85, reason: "Generative AI safety", applyUrl: "https://stabilityai.com/careers/search?q=safety" },
+            
+            // Financial Services
+            { company: "PayPal", title: "Fraud Prevention Manager", category: "abuse-fraud", description: "Combat fraud across payments ecosystem.", location: "San Jose, CA", fit: 89, reason: "Payments fraud prevention", applyUrl: "https://paypal.com/careers/search?q=fraud" },
+            { company: "Square", title: "Trust & Safety Operations Lead", category: "trust-safety", description: "Manage safety for merchant payment platform.", location: "San Francisco, CA", fit: 88, reason: "Payments platform safety", applyUrl: "https://squareup.com/careers/search?q=safety" },
+            { company: "Wise", title: "Compliance & Safety Manager", category: "policy", description: "Ensure AML/CFT compliance for money transfer platform.", location: "London, UK", fit: 86, reason: "International payments compliance", applyUrl: "https://wise.com/careers/search?q=compliance" },
+            
+            // Non-profits & Standards
+            { company: "Internet Watch Foundation", title: "Analyst - Child Safety", category: "abuse-fraud", description: "Investigate child exploitation reports online.", location: "Cambridge, UK", fit: 84, reason: "Child safety mission", applyUrl: "https://iwf.org.uk/careers" },
+            { company: "NCMEC", title: "Threat Intelligence Analyst", category: "threat-intel", description: "Investigate child sexual abuse material.", location: "Washington, DC", fit: 83, reason: "Child protection mission", applyUrl: "https://ncmec.org/careers" },
+            { company: "Global Internet Forum (GIFCT)", title: "Policy & Safety Manager", category: "policy", description: "Coordinate cross-platform safety initiatives.", location: "San Francisco, CA", fit: 85, reason: "Multi-stakeholder coordination", applyUrl: "https://gifct.org/careers" },
+            
+            // Emerging Platforms
+            { company: "Threads", title: "Trust & Safety Operations", category: "trust-safety", description: "Manage safety for text-based social platform.", location: "Menlo Park, CA", fit: 91, reason: "Twitter alternative opportunity", applyUrl: "https://metacareers.com/careers/search?q=threads" },
+            { company: "Mastodon", title: "Safety & Moderation Lead", category: "trust-safety", description: "Support decentralized social network moderation.", location: "Remote", fit: 82, reason: "Federated platform approach", applyUrl: "https://mastodon.social/careers" },
+            
+            // Professional Networks
+            { company: "LinkedIn", title: "Trust & Safety Manager", category: "trust-safety", description: "Protect professional network from spam and fraud.", location: "Sunnyvale, CA", fit: 88, reason: "Professional network safety", applyUrl: "https://linkedin.com/jobs/search?q=trust%20safety" },
+            
+            // Travel & Booking
+            { company: "Booking.com", title: "Safety Operations Manager", category: "trust-safety", description: "Prevent fraud and abuse in travel platform.", location: "Amsterdam, Netherlands", fit: 86, reason: "Travel marketplace safety", applyUrl: "https://booking.com/careers/search?q=safety" },
+            { company: "Expedia", title: "Trust & Safety Lead", category: "trust-safety", description: "Manage safety across multiple travel properties.", location: "Seattle, WA", fit: 85, reason: "Travel industry expertise", applyUrl: "https://expediagroup.com/careers/search?q=safety" },
+            
+            // Education
+            { company: "Coursera", title: "Safety & Integrity Manager", category: "trust-safety", description: "Prevent fraud and maintain academic integrity.", location: "Mountain View, CA", fit: 84, reason: "EdTech platform safety", applyUrl: "https://coursera.com/careers/search?q=safety" },
+            { company: "Duolingo", title: "Community Safety Manager", category: "trust-safety", description: "Manage safety in language learning community.", location: "Pittsburgh, PA", fit: 82, reason: "Community-driven learning", applyUrl: "https://duolingo.com/careers/search?q=safety" },
+            
+            // Consulting & Services
+            { company: "Deloitte", title: "Trust & Safety Consulting Lead", category: "policy", description: "Advise clients on safety strategy and operations.", location: "Multiple", fit: 81, reason: "Advisory role opportunity", applyUrl: "https://deloitte.com/careers/search?q=safety" },
+            { company: "Accenture", title: "Trust & Safety Transformation Manager", category: "trust-safety", description: "Lead T&S modernization initiatives for enterprise clients.", location: "Multiple", fit: 80, reason: "Enterprise transformation", applyUrl: "https://accenture.com/careers/search?q=safety" },
+            
+            // Additional Startups
+            { company: "Figma", title: "Safety & Abuse Prevention Manager", category: "trust-safety", description: "Prevent IP theft and abuse on design platform.", location: "San Francisco, CA", fit: 83, reason: "Creative platform safety", applyUrl: "https://figma.com/careers/search?q=safety" },
+            { company: "Notion", title: "Trust & Safety Operations", category: "trust-safety", description: "Manage abuse prevention for workspace platform.", location: "San Francisco, CA", fit: 82, reason: "Productivity platform safety", applyUrl: "https://notion.so/careers/search?q=safety" },
+            { company: "Canva", title: "Safety Operations Lead", category: "trust-safety", description: "Protect design platform from IP and abuse issues.", location: "Sydney, Australia", fit: 82, reason: "Design platform at scale", applyUrl: "https://canva.com/careers/search?q=safety" }
+        ];
+
+        function showDashboard() {
+            document.getElementById('dashboard').classList.add('active');
+            document.getElementById('matches').classList.remove('active');
+            document.getElementById('settings').classList.remove('active');
+            updateNavButtons('dashboard');
+        }
+
+        function showMatches() {
+            console.log('showMatches called');
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('matches').classList.add('active');
+            document.getElementById('settings').classList.remove('active');
+            updateNavButtons('matches');
+            console.log('About to render', jobData.length, 'jobs');
+            renderJobs(jobData);
+        }
+
+        function showSettings() {
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('matches').classList.remove('active');
+            document.getElementById('settings').classList.add('active');
+            updateNavButtons('settings');
+        }
+
+        function updateNavButtons(active) {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const buttons = document.querySelectorAll('.nav-btn');
+            if (active === 'dashboard') buttons[0].classList.add('active');
+            else if (active === 'matches') buttons[1].classList.add('active');
+            else if (active === 'settings') buttons[2].classList.add('active');
+        }
+
+        function renderJobs(jobs) {
+            const tbody = document.getElementById('jobsTableBody');
+            if (!tbody) {
+                console.error('jobsTableBody element not found!');
+                return;
+            }
+
+            tbody.innerHTML = '';
+
+            if (jobs.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="no-results" style="text-align:center; padding:24px;">🔍 No matches found — try adjusting your filters</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            jobs.forEach((job) => {
+                const status = job.fit >= 88 ? 'Actively hiring' : 'Position recently filled';
+                const statusClass = job.fit >= 88 ? 'status-active' : 'status-filled';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <div class="company-name">${job.company}</div>
+                    </td>
+                    <td>
+                        <a class="job-link" href="${job.applyUrl}" target="_blank" rel="noopener noreferrer">${job.title}</a>
+                        <div style="font-size:12px;color:#667788;margin-top:6px;">${job.location} • ${job.category.replace('-', ' ')}</div>
+                    </td>
+                    <td class="apply-cell">
+                        <button class="apply-btn" onclick="window.open('${job.applyUrl}', '_blank')">Apply Now ↗</button>
+                    </td>
+                    <td>
+                        <span class="status-pill ${statusClass}">${status}</span>
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterMatches(category, element) {
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (element) {
+                element.classList.add('active');
+            }
+
+            // Filter jobs
+            let filtered = jobData;
+            if (category !== 'all') {
+                filtered = jobData.filter(job => job.category === category);
+            }
+            renderJobs(filtered);
+        }
+
+        // Handle fit score slider
+        document.addEventListener('DOMContentLoaded', function() {
+            const fitScoreSlider = document.querySelector('input[type="range"]');
+            const fitScoreDisplay = document.getElementById('fitScoreDisplay');
+            if (fitScoreSlider) {
+                fitScoreSlider.addEventListener('input', function() {
+                    fitScoreDisplay.textContent = this.value + '%';
+                });
+            }
+        });
+
+        function saveSettings() {
+            alert('✅ Settings saved successfully!\n\nYour preferences have been updated.');
+        }
+
+        // Companies functionality
+        function showCompanies() {
+            document.querySelectorAll('.content').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('companies').classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderCompanies();
+        }
+
+        const companies = {
+            'FAANG & Big Tech': {
+                icon: '🧠',
+                companies: [
+                    { name: 'Meta (Facebook)', website: 'https://www.meta.com', careers: 'https://www.metacareers.com' },
+                    { name: 'Amazon', website: 'https://www.amazon.com', careers: 'https://www.amazon.jobs' },
+                    { name: 'Apple', website: 'https://www.apple.com', careers: 'https://www.apple.com/careers' },
+                    { name: 'Netflix', website: 'https://www.netflix.com', careers: 'https://jobs.netflix.com' },
+                    { name: 'Google', website: 'https://www.google.com', careers: 'https://careers.google.com' },
+                    { name: 'Microsoft', website: 'https://www.microsoft.com', careers: 'https://www.microsoft.com/careers' },
+                    { name: 'Adobe', website: 'https://www.adobe.com', careers: 'https://adobe.wd5.myworkdayjobs.com/AdobeCareers' },
+                    { name: 'Salesforce', website: 'https://www.salesforce.com', careers: 'https://www.salesforce.com/company/careers' },
+                    { name: 'Oracle', website: 'https://www.oracle.com', careers: 'https://www.oracle.com/corporate/careers' },
+                    { name: 'IBM', website: 'https://www.ibm.com', careers: 'https://www.ibm.com/employment' }
+                ]
+            },
+            'Security / Trust & Safety': {
+                icon: '🛡️',
+                companies: [
+                    { name: 'CrowdStrike', website: 'https://www.crowdstrike.com', careers: 'https://www.crowdstrike.com/careers' },
+                    { name: 'Palo Alto Networks', website: 'https://www.paloaltonetworks.com', careers: 'https://www.paloaltonetworks.com/careers' },
+                    { name: 'SentinelOne', website: 'https://www.sentinelone.com', careers: 'https://www.sentinelone.com/company/careers' },
+                    { name: 'HackerOne', website: 'https://www.hackerone.com', careers: 'https://www.hackerone.com/careers' },
+                    { name: 'Bugcrowd', website: 'https://www.bugcrowd.com', careers: 'https://www.bugcrowd.com/about/careers' }
+                ]
+            },
+            'Web3 / Crypto': {
+                icon: '🪙',
+                companies: [
+                    { name: 'Coinbase', website: 'https://www.coinbase.com', careers: 'https://www.coinbase.com/careers' },
+                    { name: 'Kraken', website: 'https://www.kraken.com', careers: 'https://www.kraken.com/careers' },
+                    { name: 'Binance', website: 'https://www.binance.com', careers: 'https://careers.binance.com' },
+                    { name: 'OpenSea', website: 'https://opensea.io', careers: 'https://opensea.io/careers' }
+                ]
+            }
+        };
+
+        function renderCompanies(searchTerm = '') {
+            const container = document.getElementById('companiesContainer');
+            const search = searchTerm.toLowerCase();
+            
+            let html = '';
+            let totalCompanies = 0;
+            
+            Object.entries(companies).forEach(([category, data]) => {
+                const filteredCompanies = data.companies.filter(company => 
+                    company.name.toLowerCase().includes(search)
+                );
+                
+                if (filteredCompanies.length > 0) {
+                    totalCompanies += filteredCompanies.length;
+                    html += `
+                        <div style="margin-bottom: 3rem;">
+                            <h3 style="color: #0066CC; margin-bottom: 1.5rem; font-size: 20px;">
+                                <span style="margin-right: 10px;">${data.icon}</span>
+                                ${category} (${filteredCompanies.length})
+                            </h3>
+                            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                <thead>
+                                    <tr style="background: #F7FAFC;">
+                                        <th style="padding: 16px; text-align: left; color: #4A5568; font-weight: 600; width: 50%;">Company</th>
+                                        <th style="padding: 16px; text-align: left; color: #4A5568; font-weight: 600; width: 50%;">Careers Page</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${filteredCompanies.map(company => `
+                                        <tr style="border-top: 1px solid #E2E8F0;">
+                                            <td style="padding: 16px;">
+                                                <a href="${company.website}" target="_blank" style="color: #0066CC; text-decoration: none; font-weight: 500;">
+                                                    ${company.name}
+                                                </a>
+                                            </td>
+                                            <td style="padding: 16px;">
+                                                <a href="${company.careers}" target="_blank" style="color: #0066CC; text-decoration: none; word-break: break-all;">
+                                                    ${company.careers}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+            });
+            
+            container.innerHTML = html || '<p style="text-align: center; color: #666;">No companies found</p>';
+        }
+
+        function filterCompanies(searchTerm) {
+            renderCompanies(searchTerm);
+        }
+    </script>
+</body>
+</html>

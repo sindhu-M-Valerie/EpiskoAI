@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="octopusGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0052A3;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tridentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Octopus Head -->
+  <ellipse cx="100" cy="70" rx="40" ry="45" fill="url(#octopusGradient)" stroke="#004499" stroke-width="2"/>
+  
+  <!-- Eyes -->
+  <circle cx="85" cy="65" r="6" fill="white"/>
+  <circle cx="115" cy="65" r="6" fill="white"/>
+  <circle cx="87" cy="65" r="3" fill="#000"/>
+  <circle cx="117" cy="65" r="3" fill="#000"/>
+  
+  <!-- Tentacles (8 tentacles) -->
+  <g fill="url(#octopusGradient)" stroke="#004499" stroke-width="1.5">
+    <!-- Left tentacles -->
+    <path d="M 70 100 Q 45 120, 40 145 Q 38 155, 42 160 Q 45 163, 48 160 Q 50 155, 48 145 Q 52 125, 75 105 Z"/>
+    <path d="M 75 105 Q 55 130, 55 155 Q 54 165, 58 168 Q 61 170, 63 167 Q 65 162, 64 155 Q 66 135, 80 110 Z"/>
+    <path d="M 80 110 Q 65 140, 68 165 Q 68 175, 72 177 Q 75 178, 77 175 Q 78 170, 77 165 Q 78 145, 85 115 Z"/>
+    <path d="M 85 112 Q 75 145, 80 170 Q 81 180, 85 181 Q 88 181, 89 178 Q 90 173, 89 170 Q 90 150, 90 117 Z"/>
+    
+    <!-- Right tentacles -->
+    <path d="M 130 100 Q 155 120, 160 145 Q 162 155, 158 160 Q 155 163, 152 160 Q 150 155, 152 145 Q 148 125, 125 105 Z"/>
+    <path d="M 125 105 Q 145 130, 145 155 Q 146 165, 142 168 Q 139 170, 137 167 Q 135 162, 136 155 Q 134 135, 120 110 Z"/>
+    <path d="M 120 110 Q 135 140, 132 165 Q 132 175, 128 177 Q 125 178, 123 175 Q 122 170, 123 165 Q 122 145, 115 115 Z"/>
+    <path d="M 115 112 Q 125 145, 120 170 Q 119 180, 115 181 Q 112 181, 111 178 Q 110 173, 111 170 Q 110 150, 110 117 Z"/>
+  </g>
+  
+  <!-- Trident -->
+  <g fill="url(#tridentGradient)" stroke="#CC8800" stroke-width="1.5">
+    <!-- Handle -->
+    <rect x="95" y="30" width="10" height="50" rx="2"/>
+    
+    <!-- Prongs -->
+    <path d="M 85 35 L 85 10 L 80 5 L 80 15 L 85 20 L 85 35 Z"/>
+    <path d="M 95 35 L 95 5 L 100 0 L 105 5 L 105 35 Z"/>
+    <path d="M 115 35 L 115 10 L 120 5 L 120 15 L 115 20 L 115 35 Z"/>
+    
+    <!-- Center spike -->
+    <polygon points="100,0 97,5 103,5"/>
+    
+    <!-- Prong tips -->
+    <circle cx="80" cy="5" r="2" fill="#FFD700"/>
+    <circle cx="100" cy="0" r="2" fill="#FFD700"/>
+    <circle cx="120" cy="5" r="2" fill="#FFD700"/>
+  </g>
+  
+  <!-- Smile -->
+  <path d="M 85 80 Q 100 88, 115 80" fill="none" stroke="#004499" stroke-width="2" stroke-linecap="round"/>
+</svg>

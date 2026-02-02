@@ -1,0 +1,34 @@
+nohup: ignoring input
+🚀 EpiskoAI Real Job Aggregator
+
+🔍 Fetching real job listings...
+📋 Checking Greenhouse...
+   Found 400 jobs from Greenhouse
+📋 Checking Lever...
+⚠️  Error fetching from Lever for Benchling: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out. (read timeout=10)
+   Found 0 jobs from Lever
+
+✅ Total jobs found: 400
+💾 Saved 400 jobs to jobs_data.json
+
+📊 Sample jobs:
+
+  • Compliance Manager, Customer Trust & Third Party Risk at Figma
+    📍 San Francisco, CA • New York, NY • United States
+    🔗 https://boards.greenhouse.io/figma/jobs/5735296004?gh_jid=57...
+
+  • Product Security Engineer at Airtable
+    📍 San Francisco, CA; Remote (Seattle, WA only)
+    🔗 https://job-boards.greenhouse.io/airtable/jobs/8194662002...
+
+  • Databricks Enterprise Lead Security Architect -   Principal IT Software Engineer at Databricks
+    📍 Mountain View, California; San Francisco, California
+    🔗 https://databricks.com/company/careers/open-positions/job?gh...
+
+  • Head of Security & Observability ISV Partnerships at Databricks
+    📍 United States
+    🔗 https://databricks.com/company/careers/open-positions/job?gh...
+
+  • Product Security Engineer at Databricks
+    📍 United States
+    🔗 https://databricks.com/company/careers/open-positions/job?gh...

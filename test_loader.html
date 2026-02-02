@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Job Loader</title>
+</head>
+<body>
+    <h1>Testing Job Loading</h1>
+    <div id="result">Loading...</div>
+    <script>
+        async function testLoad() {
+            try {
+                console.log('Fetching jobs_data.json...');
+                const response = await fetch('jobs_data.json');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Data loaded:', data.total_jobs, 'jobs');
+                document.getElementById('result').innerHTML = 'SUCCESS: Loaded ' + data.total_jobs + ' jobs<br>Total companies: ' + new Set(data.jobs.map(j => j.company)).size;
+            } catch (error) {
+                console.error('ERROR:', error);
+                document.getElementById('result').innerHTML = 'ERROR: ' + error.message;
+            }
+        }
+        testLoad();
+    </script>
+</body>
+</html>

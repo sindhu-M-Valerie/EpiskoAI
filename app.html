@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Comprehensive job aggregator for Trust & Safety positions in Web3, Crypto, and Tech">
+    <meta name="theme-color" content="#4a90e2">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="EpiskoAI">
+    
+    <title>EpiskoAI - Trust & Safety Jobs</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192x192.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* App Header */
+        .app-header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+        }
+
+        .app-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #4a90e2, #64b5f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .job-count {
+            font-size: 0.875rem;
+            color: #a0a0a0;
+            margin-top: 0.25rem;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .nav-tab {
+            flex: 1;
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            color: #e0e0e0;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            border-color: #4a90e2;
+            color: white;
+        }
+
+        .nav-tab:active {
+            transform: scale(0.98);
+        }
+
+        /* Install Banner */
+        .install-banner {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            padding: 1rem;
+            text-align: center;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .install-banner.show {
+            display: flex;
+        }
+
+        .install-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .install-text h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .install-text p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .install-btn {
+            background: white;
+            color: #4a90e2;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .close-banner {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Filters Section */
+        .filters {
+            padding: 1rem;
+            background: rgba(22, 33, 62, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.875rem;
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        /* Search Box */
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: 8px;
+            padding: 0.875rem;
+            gap: 0.75rem;
+        }
+
+        .search-icon {
+            color: #4a90e2;
+            font-size: 1.25rem;
+        }
+
+        #searchInput {
+            background: transparent;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1rem;
+            flex: 1;
+            outline: none;
+        }
+
+        #searchInput::placeholder {
+            color: #666;
+        }
+
+        /* Jobs Container */
+        .container {
+            padding: 1rem;
+        }
+
+        /* Job Card */
+        .job-card {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(74, 144, 226, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .job-card:active {
+            transform: scale(0.98);
+        }
+
+        .job-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.75rem;
+            gap: 1rem;
+        }
+
+        .job-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .company-name {
+            font-size: 0.875rem;
+            color: #4a90e2;
+            font-weight: 500;
+        }
+
+        .job-badge {
+            background: rgba(74, 144, 226, 0.2);
+            color: #4a90e2;
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .job-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(74, 144, 226, 0.1);
+        }
+
+        .job-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #a0a0a0;
+        }
+
+        .job-detail-icon {
+            font-size: 1rem;
+        }
+
+        .view-job-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 0.875rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-job-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 2rem 1rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination button {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            color: #e0e0e0;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            min-width: 44px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button:active {
+            transform: scale(0.95);
+        }
+
+        .pagination button.active {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            border-color: #4a90e2;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #a0a0a0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(74, 144, 226, 0.2);
+            border-top-color: #4a90e2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #a0a0a0;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Companies Directory */
+        .companies-header {
+            padding: 1.5rem 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .companies-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .companies-header p {
+            color: #a0a0a0;
+            margin-bottom: 1.5rem;
+        }
+
+        .company-search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: 8px;
+            padding: 0.875rem;
+            gap: 0.75rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #companySearch {
+            background: transparent;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1rem;
+            flex: 1;
+            outline: none;
+        }
+
+        #companySearch::placeholder {
+            color: #666;
+        }
+
+        .company-category {
+            margin-bottom: 2.5rem;
+        }
+
+        .category-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #4a90e2;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(74, 144, 226, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .category-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Company Table */
+        .company-table {
+            width: 100%;
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(74, 144, 226, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .company-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .company-table thead {
+            background: rgba(74, 144, 226, 0.1);
+        }
+
+        .company-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #4a90e2;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+        }
+
+        .company-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(74, 144, 226, 0.1);
+        }
+
+        .company-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .company-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .company-table tbody tr:hover {
+            background: rgba(74, 144, 226, 0.05);
+        }
+
+        .company-name-cell {
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .company-link {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .company-link:hover {
+            color: #64b5f6;
+            text-decoration: underline;
+        }
+
+        .link-icon {
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .filters {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .filter-group {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .job-card {
+                padding: 1.5rem;
+            }
+        }
+        let currentView = 'jobs';
+
+        // Company data
+        const companies = {
+            'FAANG & Big Tech': {
+                icon: '🧠',
+                companies: [
+                    { name: 'Meta (Facebook)', website: 'https://www.meta.com', careers: 'https://www.metacareers.com' },
+                    { name: 'Amazon', website: 'https://www.amazon.com', careers: 'https://www.amazon.jobs' },
+                    { name: 'Apple', website: 'https://www.apple.com', careers: 'https://www.apple.com/careers' },
+                    { name: 'Netflix', website: 'https://www.netflix.com', careers: 'https://jobs.netflix.com' },
+                    { name: 'Google', website: 'https://www.google.com', careers: 'https://careers.google.com' },
+                    { name: 'Microsoft', website: 'https://www.microsoft.com', careers: 'https://careers.microsoft.com' },
+                    { name: 'Adobe', website: 'https://www.adobe.com', careers: 'https://adobe.wd5.myworkdayjobs.com/AdobeCareers' },
+                    { name: 'Salesforce', website: 'https://www.salesforce.com', careers: 'https://www.salesforce.com/company/careers' },
+                    { name: 'Oracle', website: 'https://www.oracle.com', careers: 'https://www.oracle.com/corporate/careers' },
+                    { name: 'IBM', website: 'https://www.ibm.com', careers: 'https://www.ibm.com/employment' }
+                ]
+            },
+            'Security / Trust & Safety / Infosec': {
+                icon: '🛡️',
+                companies: [
+                    { name: 'CrowdStrike', website: 'https://www.crowdstrike.com', careers: 'https://www.crowdstrike.com/careers' },
+                    { name: 'Palo Alto Networks', website: 'https://www.paloaltonetworks.com', careers: 'https://www.paloaltonetworks.com/careers' },
+                    { name: 'SentinelOne', website: 'https://www.sentinelone.com', careers: 'https://www.sentinelone.com/company/careers' },
+                    { name: 'FireEye / Trellix', website: 'https://www.trellix.com', careers: 'https://www.trellix.com/company/careers' },
+                    { name: 'Check Point Software', website: 'https://www.checkpoint.com', careers: 'https://www.checkpoint.com/careers' },
+                    { name: 'Sophos', website: 'https://www.sophos.com', careers: 'https://www.sophos.com/en-us/careers' },
+                    { name: 'Rapid7', website: 'https://www.rapid7.com', careers: 'https://www.rapid7.com/company/careers' },
+                    { name: 'Tenable', website: 'https://www.tenable.com', careers: 'https://www.tenable.com/careers' },
+                    { name: 'Akamai', website: 'https://www.akamai.com', careers: 'https://www.akamai.com/us/en/about/careers' },
+                    { name: 'Cisco Security', website: 'https://www.cisco.com', careers: 'https://jobs.cisco.com' },
+                    { name: 'HackerOne', website: 'https://www.hackerone.com', careers: 'https://www.hackerone.com/careers' },
+                    { name: 'Bugcrowd', website: 'https://www.bugcrowd.com', careers: 'https://www.bugcrowd.com/about/careers' },
+                    { name: 'Synack', website: 'https://www.synack.com', careers: 'https://www.synack.com/careers' },
+                    { name: 'Cobalt', website: 'https://cobalt.io', careers: 'https://cobalt.io/careers' },
+                    { name: 'SafeBreach', website: 'https://www.safebreach.com', careers: 'https://www.safebreach.com/about/careers' },
+                    { name: 'Fortinet', website: 'https://www.fortinet.com', careers: 'https://www.fortinet.com/corporate/careers' },
+                    { name: 'BlackBerry (Cylance)', website: 'https://www.blackberry.com', careers: 'https://careers.blackberry.com' },
+                    { name: 'Mimecast', website: 'https://www.mimecast.com', careers: 'https://www.mimecast.com/careers' },
+                    { name: 'Splunk', website: 'https://www.splunk.com', careers: 'https://www.splunk.com/en_us/careers.html' },
+                    { name: 'Proofpoint', website: 'https://www.proofpoint.com', careers: 'https://www.proofpoint.com/us/careers' },
+                    { name: 'Okta', website: 'https://www.okta.com', careers: 'https://www.okta.com/company/careers' },
+                    { name: 'Auth0', website: 'https://auth0.com', careers: 'https://auth0.com/careers' },
+                    { name: '1Password', website: 'https://1password.com', careers: 'https://1password.com/careers' },
+                    { name: 'LastPass (GoTo)', website: 'https://www.goto.com', careers: 'https://www.goto.com/careers' },
+                    { name: 'Bitwarden', website: 'https://bitwarden.com', careers: 'https://bitwarden.com/careers' },
+                    { name: 'Dashlane', website: 'https://www.dashlane.com', careers: 'https://www.dashlane.com/careers' },
+                    { name: 'Keeper Security', website: 'https://www.keepersecurity.com', careers: 'https://www.keepersecurity.com/careers' },
+                    { name: 'Tanium', website: 'https://www.tanium.com', careers: 'https://www.tanium.com/careers' },
+                    { name: 'CyberArk', website: 'https://www.cyberark.com', careers: 'https://www.cyberark.com/careers' },
+                    { name: 'Duo Security (Cisco)', website: 'https://duo.com', careers: 'https://jobs.cisco.com' },
+                    { name: 'OneLogin', website: 'https://www.onelogin.com', careers: 'https://www.onelogin.com/careers' },
+                    { name: 'Varonis', website: 'https://www.varonis.com', careers: 'https://www.varonis.com/careers' },
+                    { name: 'SailPoint', website: 'https://www.sailpoint.com', careers: 'https://www.sailpoint.com/careers' },
+                    { name: 'Zscaler', website: 'https://www.zscaler.com', careers: 'https://www.zscaler.com/careers' },
+                    { name: 'Vectra AI', website: 'https://vectra.ai', careers: 'https://vectra.ai/careers' },
+                    { name: 'Darktrace', website: 'https://www.darktrace.com', careers: 'https://www.darktrace.com/en/careers' },
+                    { name: 'Qualys', website: 'https://www.qualys.com', careers: 'https://www.qualys.com/careers' },
+                    { name: 'F5 Networks', website: 'https://www.f5.com', careers: 'https://www.f5.com/company/careers' },
+                    { name: 'Juniper Networks', website: 'https://www.juniper.net', careers: 'https://www.juniper.net/us/en/about-us/careers.html' },
+                    { name: 'Arista Networks', website: 'https://www.arista.com', careers: 'https://www.arista.com/en/careers' },
+                    { name: 'NortonLifeLock', website: 'https://www.nortonlifelock.com', careers: 'https://www.nortonlifelock.com/careers' },
+                    { name: 'McAfee', website: 'https://www.mcafee.com', careers: 'https://careers.mcafee.com' },
+                    { name: 'Trend Micro', website: 'https://www.trendmicro.com', careers: 'https://www.trendmicro.com/en_us/about/careers.html' },
+                    { name: 'RSA Security', website: 'https://www.rsa.com', careers: 'https://www.rsa.com/en-us/careers' },
+                    { name: 'A10 Networks', website: 'https://www.a10networks.com', careers: 'https://www.a10networks.com/careers' },
+                    { name: 'Imperva', website: 'https://www.imperva.com', careers: 'https://www.imperva.com/careers' },
+                    { name: 'Barracuda Networks', website: 'https://www.barracuda.com', careers: 'https://www.barracuda.com/careers' },
+                    { name: 'SolarWinds', website: 'https://www.solarwinds.com', careers: 'https://careers.solarwinds.com' },
+                    { name: 'Secureworks', website: 'https://www.secureworks.com', careers: 'https://www.secureworks.com/careers' },
+                    { name: 'Veracode', website: 'https://www.veracode.com', careers: 'https://www.veracode.com/careers' },
+                    { name: 'Checkmarx', website: 'https://checkmarx.com', careers: 'https://checkmarx.com/careers' },
+                    { name: 'Siemplify', website: 'https://www.siemplify.co', careers: 'https://www.siemplify.co/careers' },
+                    { name: 'Exabeam', website: 'https://www.exabeam.com', careers: 'https://www.exabeam.com/careers' }
+                ]
+            },
+            'Web3 / Crypto Infrastructure': {
+                icon: '🪙',
+                companies: [
+                    { name: 'OpenSea', website: 'https://opensea.io', careers: 'https://opensea.notion.site/OpenSea-Careers-94ba94c930d3452990d25112f7f4038a' },
+                    { name: 'Coinbase', website: 'https://www.coinbase.com', careers: 'https://www.coinbase.com/careers' },
+                    { name: 'Kraken', website: 'https://www.kraken.com', careers: 'https://www.kraken.com/careers' },
+                    { name: 'Binance', website: 'https://www.binance.com', careers: 'https://careers.binance.com' },
+                    { name: 'Gemini', website: 'https://www.gemini.com', careers: 'https://www.gemini.com/careers' },
+                    { name: 'Bitfinex', website: 'https://www.bitfinex.com', careers: 'https://www.bitfinex.com/careers' },
+                    { name: 'Bitstamp', website: 'https://www.bitstamp.net', careers: 'https://www.bitstamp.net/careers' },
+                    { name: 'OKX', website: 'https://www.okx.com', careers: 'https://www.okx.com/us/careers' },
+                    { name: 'Blockchain.com', website: 'https://www.blockchain.com', careers: 'https://www.blockchain.com/careers' },
+                    { name: 'MoonPay', website: 'https://www.moonpay.com', careers: 'https://moonpay.com/careers' },
+                    { name: 'Alchemy', website: 'https://www.alchemy.com', careers: 'https://www.alchemy.com/careers' },
+                    { name: 'Chainalysis', website: 'https://www.chainalysis.com', careers: 'https://www.chainalysis.com/careers' },
+                    { name: 'TRM Labs', website: 'https://www.trmlabs.com', careers: 'https://www.trmlabs.com/careers' },
+                    { name: 'Fireblocks', website: 'https://www.fireblocks.com', careers: 'https://www.fireblocks.com/careers' },
+                    { name: 'Anchorage Digital', website: 'https://www.anchorage.com', careers: 'https://www.anchorage.com/careers' },
+                    { name: 'Blockdaemon', website: 'https://blockdaemon.com', careers: 'https://blockdaemon.com/careers' },
+                    { name: 'Infura', website: 'https://infura.io', careers: 'https://infura.io/careers' },
+                    { name: 'Consensys', website: 'https://consensys.net', careers: 'https://consensys.net/careers' },
+                    { name: 'Polygon', website: 'https://polygon.technology', careers: 'https://polygon.technology/careers' },
+                    { name: 'Solana Labs', website: 'https://solana.com', careers: 'https://solana.com/careers' },
+                    { name: 'Avalanche', website: 'https://www.avax.network', careers: 'https://www.avax.network/careers' },
+                    { name: 'Near Protocol', website: 'https://near.org', careers: 'https://near.org/careers' },
+                    { name: 'Arbitrum', website: 'https://arbitrum.io', careers: 'https://offchainlabs.com/careers' },
+                    { name: 'Optimism', website: 'https://optimism.io', careers: 'https://optimism.io/careers' },
+                    { name: 'The Graph', website: 'https://thegraph.com', careers: 'https://thegraph.com/careers' },
+                    { name: 'Aave', website: 'https://aave.com', careers: 'https://aave.com/careers' },
+                    { name: 'SushiSwap', website: 'https://sushi.com', careers: 'https://sushi.com/careers' },
+                    { name: 'Uniswap Labs', website: 'https://uniswap.org', careers: 'https://uniswap.org/careers' },
+                    { name: 'Pyth Network', website: 'https://pyth.network', careers: 'https://pyth.network/careers' },
+                    { name: 'Rarible', website: 'https://rarible.com', careers: 'https://rarible.com/careers' },
+                    { name: 'Magic Eden', website: 'https://magiceden.io', careers: 'https://magiceden.io/careers' },
+                    { name: 'LooksRare', website: 'https://looksrare.org', careers: 'https://looksrare.org/careers' },
+                    { name: 'Moonbeam', website: 'https://moonbeam.network', careers: 'https://moonbeam.network/careers' },
+                    { name: 'Moonwell', website: 'https://moonwell.xyz', careers: 'https://moonwell.xyz/jobs' },
+                    { name: 'MoonDAO', website: 'https://moondao.xyz', careers: 'https://moondao.xyz/careers' },
+                    { name: 'SideShift.ai', website: 'https://sideshift.ai', careers: 'https://sideshift.ai/jobs' },
+                    { name: 'BitGo', website: 'https://www.bitgo.com', careers: 'https://www.bitgo.com/careers' },
+                    { name: 'Ledger', website: 'https://www.ledger.com', careers: 'https://www.ledger.com/careers' },
+                    { name: 'Trezor', website: 'https://trezor.io', careers: 'https://trezor.io/careers' },
+                    { name: 'Balancer Labs', website: 'https://balancer.fi', careers: 'https://balancer.fi/careers' },
+                    { name: 'Compound Labs', website: 'https://compound.finance', careers: 'https://compound.finance/jobs' },
+                    { name: 'dYdX', website: 'https://dydx.exchange', careers: 'https://dydx.exchange/careers' },
+                    { name: 'Synthetix', website: 'https://synthetix.io', careers: 'https://synthetix.io/careers' },
+                    { name: 'Arweave', website: 'https://www.arweave.org', careers: 'https://www.arweave.org/jobs' },
+                    { name: 'Livepeer', website: 'https://livepeer.org', careers: 'https://livepeer.org/jobs' }
+                ]
+            },
+            'Web3 Security / Audit / Safety': {
+                icon: '🛠',
+                companies: [
+                    { name: 'CertiK', website: 'https://www.certik.com', careers: 'https://jobs.lever.co/certik' },
+                    { name: 'OpenZeppelin', website: 'https://www.openzeppelin.com', careers: 'https://www.openzeppelin.com/careers' },
+                    { name: 'Code4rena', website: 'https://code4rena.com', careers: 'https://web3.career/web3-companies/code4rena' },
+                    { name: 'Sherlock', website: 'https://www.sherlock.xyz', careers: 'https://web3.career/web3-companies/sherlock' },
+                    { name: 'Halborn', website: 'https://www.halborn.com', careers: 'https://www.halborn.com/careers' },
+                    { name: 'Trail of Bits', website: 'https://www.trailofbits.com', careers: 'https://apply.workable.com/trailofbits' },
+                    { name: 'Quantstamp', website: 'https://quantstamp.com', careers: 'https://quantstamp.com/careers' },
+                    { name: 'Hacken', website: 'https://hacken.io', careers: 'https://hacken.io/careers' }
+                ]
+            },
+            'Cloud & Developer Platforms': {
+                icon: '☁️',
+                companies: [
+                    { name: 'GitHub', website: 'https://github.com', careers: 'https://github.com/about/careers' },
+                    { name: 'GitLab', website: 'https://gitlab.com', careers: 'https://about.gitlab.com/jobs' },
+                    { name: 'Atlassian', website: 'https://www.atlassian.com', careers: 'https://www.atlassian.com/company/careers' },
+                    { name: 'Docker', website: 'https://www.docker.com', careers: 'https://www.docker.com/careers' },
+                    { name: 'HashiCorp', website: 'https://www.hashicorp.com', careers: 'https://www.hashicorp.com/careers' },
+                    { name: 'DigitalOcean', website: 'https://www.digitalocean.com', careers: 'https://www.digitalocean.com/careers' },
+                    { name: 'Netlify', website: 'https://www.netlify.com', careers: 'https://www.netlify.com/careers' },
+                    { name: 'Vercel', website: 'https://vercel.com', careers: 'https://vercel.com/careers' },
+                    { name: 'Render', website: 'https://render.com', careers: 'https://render.com/careers' },
+                    { name: 'Cloudflare', website: 'https://www.cloudflare.com', careers: 'https://www.cloudflare.com/careers' },
+                    { name: 'Fastly', website: 'https://www.fastly.com', careers: 'https://www.fastly.com/careers' },
+                    { name: 'PagerDuty', website: 'https://www.pagerduty.com', careers: 'https://www.pagerduty.com/careers' },
+                    { name: 'Elastic', website: 'https://www.elastic.co', careers: 'https://www.elastic.co/about/careers' },
+                    { name: 'New Relic', website: 'https://newrelic.com', careers: 'https://newrelic.com/about/careers' },
+                    { name: 'JetBrains', website: 'https://www.jetbrains.com', careers: 'https://www.jetbrains.com/company/careers' },
+                    { name: 'MongoDB', website: 'https://www.mongodb.com', careers: 'https://www.mongodb.com/careers' },
+                    { name: 'Redis Labs', website: 'https://redislabs.com', careers: 'https://redislabs.com/careers' },
+                    { name: 'Databricks', website: 'https://databricks.com', careers: 'https://databricks.com/company/careers' },
+                    { name: 'Confluent', website: 'https://www.confluent.io', careers: 'https://www.confluent.io/careers' }
+                ]
+            },
+            'SaaS & Platform Innovators': {
+                icon: '📊',
+                companies: [
+                    { name: 'Slack', website: 'https://slack.com', careers: 'https://slack.com/careers' },
+                    { name: 'Zoom', website: 'https://www.zoom.us', careers: 'https://careers.zoom.us' },
+                    { name: 'Twilio', website: 'https://www.twilio.com', careers: 'https://www.twilio.com/company/jobs' },
+                    { name: 'Shopify', website: 'https://www.shopify.com', careers: 'https://www.shopify.com/careers' },
+                    { name: 'Stripe', website: 'https://stripe.com', careers: 'https://stripe.com/jobs' },
+                    { name: 'Square', website: 'https://squareup.com', careers: 'https://squareup.com/us/en/careers' },
+                    { name: 'PayPal', website: 'https://www.paypal.com', careers: 'https://www.paypal.com/careers' },
+                    { name: 'Intuit', website: 'https://www.intuit.com', careers: 'https://www.intuit.com/careers' },
+                    { name: 'Asana', website: 'https://asana.com', careers: 'https://asana.com/jobs' },
+                    { name: 'Notion', website: 'https://www.notion.so', careers: 'https://www.notion.so/careers' },
+                    { name: 'Figma', website: 'https://www.figma.com', careers: 'https://www.figma.com/careers' },
+                    { name: 'Miro', website: 'https://miro.com', careers: 'https://miro.com/careers' },
+                    { name: 'Canva', website: 'https://www.canva.com', careers: 'https://www.canva.com/careers' },
+                    { name: 'Airtable', website: 'https://www.airtable.com', careers: 'https://www.airtable.com/careers' },
+                    { name: 'ClickUp', website: 'https://clickup.com', careers: 'https://clickup.com/careers' },
+                    { name: 'Monday.com', website: 'https://monday.com', careers: 'https://monday.com/careers' },
+                    { name: 'Smartsheet', website: 'https://www.smartsheet.com', careers: 'https://www.smartsheet.com/careers' },
+                    { name: 'Zendesk', website: 'https://www.zendesk.com', careers: 'https://www.zendesk.com/jobs' },
+                    { name: 'Datadog', website: 'https://www.datadog.com', careers: 'https://www.datadog.com/careers' },
+                    { name: 'Snowflake', website: 'https://www.snowflake.com', careers: 'https://www.snowflake.com/careers' },
+                    { name: 'UiPath', website: 'https://www.uipath.com', careers: 'https://www.uipath.com/company/careers' },
+                    { name: 'Snyk', website: 'https://snyk.com', careers: 'https://snyk.com/careers' },
+                    { name: 'Zapier', website: 'https://zapier.com', careers: 'https://zapier.com/jobs' },
+                    { name: 'Intercom', website: 'https://www.intercom.com', careers: 'https://www.intercom.com/careers' },
+                    { name: 'HubSpot', website: 'https://www.hubspot.com', careers: 'https://www.hubspot.com/careers' },
+                    { name: 'Qualtrics', website: 'https://www.qualtrics.com', careers: 'https://www.qualtrics.com/careers' }
+                ]
+            },
+            'AI / ML Companies': {
+                icon: '🤖',
+                companies: [
+                    { name: 'OpenAI', website: 'https://openai.com', careers: 'https://openai.com/careers' },
+                    { name: 'Anthropic', website: 'https://www.anthropic.com', careers: 'https://www.anthropic.com/careers' },
+                    { name: 'Stability AI', website: 'https://stability.ai', careers: 'https://stability.ai/about/careers' },
+                    { name: 'Hugging Face', website: 'https://huggingface.co', careers: 'https://huggingface.co/careers' },
+                    { name: 'Cohere', website: 'https://cohere.com', careers: 'https://txt.cohere.com/careers' },
+                    { name: 'Adept', website: 'https://www.adept.ai', careers: 'https://www.adept.ai/jobs' },
+                    { name: 'Jasper', website: 'https://www.jasper.ai', careers: 'https://www.jasper.ai/careers' },
+                    { name: 'Runway', website: 'https://runwayml.com', careers: 'https://runwayml.com/jobs' },
+                    { name: 'Replit', website: 'https://replit.com', careers: 'https://replit.com/jobs' },
+                    { name: 'DeepMind', website: 'https://deepmind.com', careers: 'https://deepmind.com/careers' },
+                    { name: 'AI21 Labs', website: 'https://www.ai21.com', careers: 'https://www.ai21.com/careers' },
+                    { name: 'Scale AI', website: 'https://scale.com', careers: 'https://scale.com/careers' }
+                ]
+            },
+            'Fintech': {
+                icon: '💳',
+                companies: [
+                    { name: 'Plaid', website: 'https://plaid.com', careers: 'https://plaid.com/careers' },
+                    { name: 'Brex', website: 'https://www.brex.com', careers: 'https://www.brex.com/careers' },
+                    { name: 'Chime', website: 'https://www.chime.com', careers: 'https://www.chime.com/careers' },
+                    { name: 'Robinhood', website: 'https://robinhood.com', careers: 'https://robinhood.com/careers' },
+                    { name: 'SoFi', website: 'https://www.sofi.com', careers: 'https://www.sofi.com/careers' },
+                    { name: 'Affirm', website: 'https://www.affirm.com', careers: 'https://www.affirm.com/careers' },
+                    { name: 'Klarna', website: 'https://www.klarna.com', careers: 'https://www.klarna.com/careers' }
+                ]
+            }
+        };
+
+        @media (min-width: 1024px) {
+            .app-header {
+                padding: 1.5rem 2rem;
+            }
+
+            .filters {
+                padding: 1.5rem 2rem;
+            }
+
+            .container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Install Banner -->
+    <div id="installBanner" class="install-banner">
+        <div class="install-text">
+            <h3>Install EpiskoAI</h3>
+            <p>Get quick access from your home screen</p>
+        </div>
+        <button id="installBtn" class="install-btn">Install</button>
+        <button id="closeBanner" class="close-banner">&times;</button>
+    </div>
+
+    <!-- App Header -->
+    <div class="app-header">
+        <div class="app-title">
+            <div class="app-icon">🛡️</div>
+            <div>
+                <h1>EpiskoAI</h1>
+                <div class="job-count" id="jobCount">Loading jobs...</div>
+            </div>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-view="jobs">My Matches</button>
+            <button class="nav-tab" data-view="companies">250 Companies</button>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div id="filtersSection" class="filters">
+        <div class="filter-group">
+            <label class="filter-label" for="locationFilter">Location</label>
+            <select id="locationFilter">
+                <option value="all">All Locations</option>
+                <option value="remote">Remote (Global)</option>
+                <option value="remote-us">Remote - US</option>
+                <option value="remote-uk">Remote - UK</option>
+                <option value="remote-india">Remote - India</option>
+                <option value="us">United States</option>
+                <option value="sf">SF Bay Area</option>
+                <option value="nyc">New York City</option>
+                <option value="seattle">Seattle</option>
+                <option value="india">India</option>
+                <option value="international">International</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label" for="companyFilter">Company</label>
+            <select id="companyFilter">
+                <option value="all">All Companies</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label" for="searchInput">Search</label>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search by title or keywords...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Jobs Container -->
+    <div id="jobsView" class="container">
+        <div id="loadingState" class="loading">
+            <div class="spinner"></div>
+            <p>Loading jobs...</p>
+        </div>
+        <div id="jobsContainer"></div>
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">📭</div>
+            <h2>No jobs found</h2>
+            <p>Try adjusting your filters or search terms</p>
+        </div>
+        <div id="pagination" class="pagination"></div>
+    </div>
+
+    <!-- Companies Directory -->
+    <div id="companiesView" class="container" style="display: none;">
+        <div class="companies-header">
+            <h2>250 Companies Directory</h2>
+            <p>Direct links to company websites and career pages</p>
+            <div class="company-search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="companySearch" placeholder="Search companies...">
+            </div>
+        </div>
+        <div id="companiesContainer"></div>
+    </div>
+
+    <script>
+        let allJobs = [];
+        let filteredJobs = [];
+        let currentPage = 1;
+        const jobsPerPage = 20;
+        let deferredPrompt;
+
+        // PWA Install Banner
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBanner').classList.add('show');
+        });
+
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to install prompt: ${outcome}`);
+                deferredPrompt = null;
+                document.getElementById('installBanner').classList.remove('show');
+            }
+        });
+
+        document.getElementById('closeBanner').addEventListener('click', () => {
+            document.getElementById('installBanner').classList.remove('show');
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => console.log('SW registered:', registration))
+                .catch(error => console.log('SW registration failed:', error));
+        }
+
+        // Load Jobs
+        async function loadJobs() {
+            try {
+                const response = await fetch('jobs_data.json');
+                const data = await response.json();
+                allJobs = data.jobs;
+                filteredJobs = [...allJobs];
+                
+                document.getElementById('jobCount').textContent = `${allJobs.length} Trust & Safety Jobs`;
+                
+                populateCompanyFilter();
+                renderJobs();
+                document.getElementById('loadingState').style.display = 'none';
+            } catch (error) {
+                console.error('Error loading jobs:', error);
+                document.getElementById('loadingState').innerHTML = '<p>Error loading jobs. Please try again later.</p>';
+            }
+        }
+
+        function populateCompanyFilter() {
+            const companies = [...new Set(allJobs.map(job => job.company))].sort();
+            const companyFilter = document.getElementById('companyFilter');
+            
+            companies.forEach(company => {
+                const option = document.createElement('option');
+                option.value = company;
+                option.textContent = company;
+                companyFilter.appendChild(option);
+            });
+        }
+
+        function filterJobs() {
+            const locationFilter = document.getElementById('locationFilter').value.toLowerCase();
+            const companyFilter = document.getElementById('companyFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredJobs = allJobs.filter(job => {
+                const location = job.location.toLowerCase();
+                
+                // Location filter
+                let locationMatch = true;
+                if (locationFilter !== 'all') {
+                    if (locationFilter === 'remote') {
+                        locationMatch = location.includes('remote') && 
+                                      !location.includes('remote,') &&
+                                      !location.match(/remote.*(us|uk|india|usa)/);
+                    } else if (locationFilter === 'remote-us') {
+                        locationMatch = location.includes('remote') && 
+                                      (location.includes('us') || location.includes('usa') || 
+                                       location.includes('united states') || location.includes('america'));
+                    } else if (locationFilter === 'remote-uk') {
+                        locationMatch = location.includes('remote') && 
+                                      (location.includes('uk') || location.includes('united kingdom'));
+                    } else if (locationFilter === 'remote-india') {
+                        locationMatch = location.includes('remote') && location.includes('india');
+                    } else if (locationFilter === 'us') {
+                        locationMatch = location.includes('us') || location.includes('usa') || 
+                                      location.includes('united states');
+                    } else if (locationFilter === 'sf') {
+                        locationMatch = location.includes('san francisco') || 
+                                      location.includes('sf') || 
+                                      location.includes('bay area');
+                    } else if (locationFilter === 'nyc') {
+                        locationMatch = location.includes('new york');
+                    } else if (locationFilter === 'seattle') {
+                        locationMatch = location.includes('seattle');
+                    } else if (locationFilter === 'india') {
+                        locationMatch = location.includes('india');
+                    } else if (locationFilter === 'international') {
+                        locationMatch = !location.includes('us') && 
+                                      !location.includes('usa') && 
+                                      !location.includes('united states');
+                    }
+                }
+
+                // Company filter
+                const companyMatch = companyFilter === 'all' || job.company === companyFilter;
+
+                // Search filter
+                const searchMatch = searchTerm === '' || 
+                                  job.title.toLowerCase().includes(searchTerm) ||
+                                  job.company.toLowerCase().includes(searchTerm);
+
+                return locationMatch && companyMatch && searchMatch;
+            });
+
+            currentPage = 1;
+            renderJobs();
+        }
+
+        function renderJobs() {
+            const container = document.getElementById('jobsContainer');
+            const emptyState = document.getElementById('emptyState');
+            const pagination = document.getElementById('pagination');
+
+            if (filteredJobs.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                pagination.innerHTML = '';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            const startIndex = (currentPage - 1) * jobsPerPage;
+            const endIndex = startIndex + jobsPerPage;
+            const jobsToShow = filteredJobs.slice(startIndex, endIndex);
+
+            container.innerHTML = jobsToShow.map(job => `
+                <div class="job-card">
+                    <div class="job-card-header">
+                        <div>
+                            <div class="job-title">${job.title}</div>
+                            <div class="company-name">${job.company}</div>
+                        </div>
+                        <div class="job-badge">${job.source}</div>
+                    </div>
+                    <div class="job-details">
+                        <div class="job-detail-item">
+                            <span class="job-detail-icon">📍</span>
+                            <span>${job.location}</span>
+                        </div>
+                        ${job.posted_date ? `
+                            <div class="job-detail-item">
+                                <span class="job-detail-icon">📅</span>
+                                <span>${new Date(job.posted_date).toLocaleDateString()}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <button class="view-job-btn" onclick="window.open('${job.url}', '_blank')">
+                        View Job →
+                    </button>
+                </div>
+            `).join('');
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+            const pagination = document.getElementById('pagination');
+
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = `
+                <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    ← Prev
+                </button>
+            `;
+
+            const maxVisible = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+            
+            if (endPage - startPage < maxVisible - 1) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+
+            if (startPage > 1) {
+                paginationHTML += `<button onclick="changePage(1)">1</button>`;
+                if (startPage > 2) {
+                    paginationHTML += `<button disabled>...</button>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `
+                    <button onclick="changePage(${i})" class="${i === currentPage ? 'active' : ''}">
+                        ${i}
+                    </button>
+                `;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    paginationHTML += `<button disabled>...</button>`;
+                }
+                paginationHTML += `<button onclick="changePage(${totalPages})">${totalPages}</button>`;
+            }
+
+            paginationHTML += `
+                <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    Next →
+                </button>
+            `;
+
+            pagination.innerHTML = paginationHTML;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                renderJobs();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // View switching
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const view = tab.dataset.view;
+                switchView(view);
+            });
+        });
+
+        function switchView(view) {
+            currentView = view;
+            
+            // Update active tab
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.view === view);
+            });
+
+            // Show/hide sections
+            if (view === 'jobs') {
+                document.getElementById('filtersSection').style.display = 'flex';
+                document.getElementById('jobsView').style.display = 'block';
+                document.getElementById('companiesView').style.display = 'none';
+            } else if (view === 'companies') {
+                document.getElementById('filtersSection').style.display = 'none';
+                document.getElementById('jobsView').style.display = 'none';
+                document.getElementById('companiesView').style.display = 'block';
+                renderCompanies();
+            }
+        }
+
+        // Render companies directory
+        function renderCompanies(searchTerm = '') {
+            const container = document.getElementById('companiesContainer');
+            const search = searchTerm.toLowerCase();
+            
+            let html = '';
+            let totalCompanies = 0;
+            
+            Object.entries(companies).forEach(([category, data]) => {
+                const filteredCompanies = data.companies.filter(company => 
+                    company.name.toLowerCase().includes(search)
+                );
+                
+                if (filteredCompanies.length > 0) {
+                    totalCompanies += filteredCompanies.length;
+                    html += `
+                        <div class="company-category">
+                            <h3 class="category-title">
+                                <span class="category-icon">${data.icon}</span>
+                                ${category} (${filteredCompanies.length})
+                            </h3>
+                            <div class="company-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40%">Company</th>
+                                            <th style="width: 30%">Website</th>
+                                            <th style="width: 30%">Careers</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${filteredCompanies.map(company => `
+                                            <tr>
+                                                <td class="company-name-cell">${company.name}</td>
+                                                <td>
+                                                    <a href="${company.website}" target="_blank" class="company-link">
+                                                        <span class="link-icon">🌐</span> Visit
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="${company.careers}" target="_blank" class="company-link">
+                                                        <span class="link-icon">💼</span> Careers
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            if (html) {
+                container.innerHTML = html;
+                document.querySelector('.companies-header h2').textContent = `${totalCompanies} Companies Directory`;
+            } else {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><h2>No companies found</h2></div>';
+            }
+        }
+
+        // Company search
+        document.addEventListener('DOMContentLoaded', () => {
+            const companySearchInput = document.getElementById('companySearch');
+            if (companySearchInput) {
+                companySearchInput.addEventListener('input', (e) => {
+                    renderCompanies(e.target.value);
+                });
+            }
+        });
+
+        // Event Listeners
+        document.getElementById('locationFilter').addEventListener('change', filterJobs);
+        document.getElementById('companyFilter').addEventListener('change', filterJobs);
+        document.getElementById('searchInput').addEventListener('input', filterJobs);
+
+        // Initialize
+        loadJobs();
+    </script>
+</body>
+</html>
