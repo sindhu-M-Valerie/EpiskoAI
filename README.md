@@ -1,5 +1,5 @@
-![EpiskoAI Logo](iMExf77szBNR7PKMJg-rfT8oM7d6sn3o46RxhBsO-uKpfvnc4TijRaMz-0tZ4q4QO1swYLnhKaYgJT6ayYF7qPtH4TWglU2L_jEXveIHyQ](https://github.com/user-attachments/assets/541f029e-876f-418a-a5a9-364ff886dd82)
-
+![_iMExf77szBNR7PKMJg-rfT8oM7d6sn3o46RxhBsO-uKpfvnc4T![Uploading _iMExf77szBNR7PKMJg-rfT8oM7d6sn3o46RxhBsO-uKpfvnc4TijRaMz-0tZ4q4QO1swYLnhKaYgJT6ayYF7qPtH4TWglU2L_jEXveIHyQ.jpeg…]()
+ijRaMz-0tZ4q4QO1swYLnhKaYgJT6ayYF7qPtH4TWglU2L_jEXveIHyQ](https://github.com/user-attachments/assets/c53af715-2ff0-4954-83e9-6baef8f95ac2)![EpiskoAI Logo]
 
 # EpiskoAI
 
