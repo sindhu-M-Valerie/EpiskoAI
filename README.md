@@ -1,4 +1,5 @@
-![EpiskoAI Logo](assets/logo.png)
+![EpiskoAI Logo](![_iMExf77szBNR7PKMJg-rfT8oM7d6sn3o46RxhBsO-uKpfvnc4TijRaMz-0tZ4q4QO1swYLnhKaYgJT6ayYF7qPtH4TWglU2L_jEXveIHyQ](https://github.com/user-attachments/assets/541f029e-876f-418a-a5a9-364ff886dd82)
+
 
 # EpiskoAI
 
