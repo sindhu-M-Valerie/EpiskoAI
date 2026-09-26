@@ -4,8 +4,8 @@
   "description": "Comprehensive job aggregator for Trust & Safety positions in Web3, Crypto, and Tech",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#1a1a2e",
-  "theme_color": "#4a90e2",
+  "background_color": "#edf2f7",
+  "theme_color": "#102a46",
   "orientation": "portrait-primary",
   "icons": [
     {

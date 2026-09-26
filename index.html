@@ -4,21 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Comprehensive job aggregator for Trust & Safety positions in Web3, Crypto, and Tech">
-    <meta name="theme-color" content="#4a90e2">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="EpiskoAI">
-    
+    <meta name="theme-color" content="#102a46">
     <title>EpiskoAI - Trust & Safety Jobs</title>
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    
-    <!-- iOS Icons -->
-    <link rel="apple-touch-icon" href="icons/icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192x192.png">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
@@ -75,6 +62,81 @@
             padding: 1rem;
             position: sticky;
             top: 0;
+
+        /* Light mauve theme */
+        body {
+            background: linear-gradient(135deg, #f1e8f4 0%, #e4d4e9 100%);
+            color: #3f3045;
+        }
+
+        .app-header {
+            background: rgba(241, 232, 244, 0.95);
+            border-bottom-color: rgba(155, 122, 168, 0.35);
+        }
+
+        .app-icon,
+        .nav-tab.active,
+        .view-job-btn,
+        .pagination button.active {
+            background: linear-gradient(135deg, #b99ac4, #92709f);
+        }
+
+        h1,
+        .company-name,
+        .search-icon,
+        .category-title,
+        .company-link {
+            color: #805b8d;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #805b8d, #b184bd);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .filters {
+            background: rgba(228, 212, 233, 0.82);
+        }
+
+        select,
+        .search-box,
+        .nav-tab,
+        .pagination button,
+        .job-card {
+            border-color: rgba(155, 122, 168, 0.42);
+            background: rgba(255, 252, 255, 0.88);
+        }
+
+        .job-title,
+        #searchInput,
+        select,
+        .pagination button {
+            color: #3f3045;
+        }
+
+        .job-badge {
+            background: rgba(155, 122, 168, 0.18);
+            color: #805b8d;
+        }
+
+        .companies-header h2,
+        .company-name-cell {
+            color: #3f3045;
+        }
+
+        .company-table {
+            background: rgba(255, 252, 255, 0.88);
+            border-color: rgba(155, 122, 168, 0.25);
+        }
+
+        .company-table thead {
+            background: rgba(155, 122, 168, 0.1);
+        }
+
+        .company-table th {
+            color: #805b8d;
+        }
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-bottom: 1px solid rgba(74, 144, 226, 0.3);
@@ -143,56 +205,6 @@
             transform: scale(0.98);
         }
 
-        /* Install Banner */
-        .install-banner {
-            background: linear-gradient(135deg, #4a90e2, #357abd);
-            padding: 1rem;
-            text-align: center;
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .install-banner.show {
-            display: flex;
-        }
-
-        .install-text {
-            flex: 1;
-            text-align: left;
-        }
-
-        .install-text h3 {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .install-text p {
-            font-size: 0.875rem;
-            opacity: 0.9;
-        }
-
-        .install-btn {
-            background: white;
-            color: #4a90e2;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .close-banner {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
         /* Filters Section */
         .filters {
             padding: 1rem;
@@ -245,6 +257,24 @@
             gap: 0.75rem;
         }
 
+        .date-filter-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .date-filter-controls select {
+            flex: 0 0 7.5rem;
+        }
+
+        .date-filter-controls input[type="date"] {
+            min-width: 0;
+            flex: 1;
+            padding: 0.875rem;
+            border: 1px solid rgba(155, 122, 168, 0.42);
+            border-radius: 8px;
+            font: inherit;
+        }
+
         .search-icon {
             color: #4a90e2;
             font-size: 1.25rem;
@@ -267,6 +297,7 @@
         .container {
             padding: 1rem;
         }
+
 
         #jobsContainer {
             display: grid;
@@ -594,19 +625,200 @@
                 padding: 2rem;
             }
         }
+        /* Final theme overrides: cool mist blue with deep navy actions. */
+        body {
+            background: linear-gradient(135deg, #edf2f7 0%, #dce5ef 100%) !important;
+            color: #263444 !important;
+        }
+
+        .app-header {
+            background: rgba(237, 242, 247, 0.97) !important;
+            border-color: rgba(36, 62, 88, 0.25) !important;
+        }
+
+        .app-header h1 {
+            color: #4b2e24 !important;
+            background: none !important;
+            -webkit-text-fill-color: #4b2e24 !important;
+            -webkit-background-clip: border-box !important;
+            background-clip: border-box !important;
+        }
+
+        .app-icon,
+        .nav-tab.active,
+        .view-job-btn,
+        .pagination button.active {
+            background: linear-gradient(135deg, #29496b, #102a46) !important;
+            border-color: #102a46 !important;
+        }
+
+        .nav-tab,
+        .pagination button,
+        select,
+        .date-filter-controls input[type="date"],
+        .search-box,
+        .company-search-box,
+        .job-card,
+        .company-table,
+        .results-toolbar select,
+        #googleJobsContainer table {
+            background: #ffffff !important;
+            border-color: rgba(36, 62, 88, 0.26) !important;
+            color: #263444 !important;
+        }
+
+        .nav-tab {
+            background: #193754 !important;
+            border-color: #193754 !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #29496b, #102a46) !important;
+        }
+
+        .nav-tab:focus-visible {
+            outline: 3px solid #102a46;
+            outline-offset: 2px;
+        }
+
+        .filters {
+            background: rgba(220, 230, 241, 0.9) !important;
+        }
+
+        .job-title,
+        .company-name-cell,
+        #searchInput,
+        select,
+        .pagination button,
+        .companies-header h2,
+        #directoryView h2,
+        #googleJobsView h2,
+        #googleJobsView h3,
+        #googleJobsContainer th,
+        #directoryContainer th {
+            color: #263444 !important;
+        }
+
+        .pagination button {
+            background: #193754 !important;
+            border-color: #193754 !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        .company-name,
+        .search-icon,
+        .category-title,
+        .company-link,
+        .company-table th,
+        #googleJobsContainer a,
+        #directoryContainer a {
+            color: #375d80 !important;
+        }
+
+        .job-badge {
+            background: #dce7f2 !important;
+            color: #29496b !important;
+        }
+
+        .job-details,
+        .company-table td,
+        #googleJobsContainer tr,
+        #directoryContainer tr {
+            border-color: rgba(36, 62, 88, 0.18) !important;
+        }
+
+        #googleJobsContainer table tr:first-child,
+        #directoryContainer table tr:first-child {
+            background: linear-gradient(135deg, #dce7f2, #c9d8e7) !important;
+        }
+
+        #googleJobsContainer table tr:not(:first-child),
+        #directoryContainer table tr:not(:first-child) {
+            background: rgba(255, 255, 255, 0.86) !important;
+        }
+
+        .spinner {
+            border-color: rgba(36, 62, 88, 0.18) !important;
+            border-top-color: #375d80 !important;
+        }
+
+        .results-toolbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .results-summary {
+            display: grid;
+            gap: 0.2rem;
+        }
+
+        #resultsCount {
+            color: #263444;
+            font-weight: 650;
+        }
+
+        #lastUpdated {
+            color: #566779;
+            font-size: 0.8rem;
+        }
+
+        .results-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .results-actions label {
+            color: #405369;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .results-actions select {
+            width: auto;
+            min-width: 145px;
+            padding: 0.65rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .clear-filters-btn {
+            border: 1px solid rgba(25, 55, 84, 0.42);
+            border-radius: 8px;
+            padding: 0.65rem 0.85rem;
+            background: transparent;
+            color: #193754;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .clear-filters-btn:hover {
+            background: #dce7f2;
+        }
+
+        @media (max-width: 640px) {
+            .results-toolbar,
+            .results-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .results-actions select,
+            .clear-filters-btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Install Banner -->
-    <div id="installBanner" class="install-banner">
-        <div class="install-text">
-            <h3>Install EpiskoAI</h3>
-            <p>Get quick access from your home screen</p>
-        </div>
-        <button id="installBtn" class="install-btn">Install</button>
-        <button id="closeBanner" class="close-banner">&times;</button>
-    </div>
-
     <!-- App Header -->
     <div class="app-header" style="text-align: center;">
         <div style="display: inline-flex; align-items: center; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
@@ -647,6 +859,18 @@
         </div>
 
         <div class="filter-group">
+            <label class="filter-label" for="postedDateFilter">Date posted</label>
+            <div class="date-filter-controls">
+                <select id="dateMatchFilter" aria-label="Date match">
+                    <option value="before">Before</option>
+                    <option value="on" selected>On</option>
+                    <option value="after">After</option>
+                </select>
+                <input type="date" id="postedDateFilter" aria-label="Select a posting date">
+            </div>
+        </div>
+
+        <div class="filter-group">
             <label class="filter-label" for="searchInput">Search</label>
             <div class="search-box">
                 <span class="search-icon">🔍</span>
@@ -660,6 +884,22 @@
         <div id="loadingState" class="loading">
             <div class="spinner"></div>
             <p>Loading jobs...</p>
+        </div>
+        <div class="results-toolbar">
+            <div class="results-summary">
+                <p id="resultsCount" aria-live="polite">Loading roles...</p>
+                <p id="lastUpdated">Checking listing freshness...</p>
+            </div>
+            <div class="results-actions">
+                <label for="sortJobs">Sort</label>
+                <select id="sortJobs">
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="company">Company A-Z</option>
+                    <option value="title">Title A-Z</option>
+                </select>
+                <button id="clearFiltersBtn" class="clear-filters-btn" type="button">Clear filters</button>
+            </div>
         </div>
         <div id="jobsContainer"></div>
         <div id="emptyState" class="empty-state" style="display: none;">
@@ -690,7 +930,6 @@
         let filteredJobs = [];
         let currentPage = 1;
         const jobsPerPage = 20;
-        let deferredPrompt;
         let currentView = 'jobs';
 
         // Google Jobs search links
@@ -1109,27 +1348,6 @@
             }
         };
 
-        // PWA Install Banner
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installBanner').classList.add('show');
-        });
-
-        document.getElementById('installBtn').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to install prompt: ${outcome}`);
-                deferredPrompt = null;
-                document.getElementById('installBanner').classList.remove('show');
-            }
-        });
-
-        document.getElementById('closeBanner').addEventListener('click', () => {
-            document.getElementById('installBanner').classList.remove('show');
-        });
-
         // Register Service Worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
@@ -1142,15 +1360,28 @@
             try {
                 const response = await fetch('jobs_data.json');
                 const data = await response.json();
-                allJobs = data.jobs;
+                const updatedAt = Date.parse(data.last_updated);
+                document.getElementById('lastUpdated').textContent = Number.isFinite(updatedAt)
+                    ? `Updated ${new Date(updatedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}`
+                    : 'Update time unavailable';
+                const now = Date.now();
+                const maxAgeMs = 60 * 24 * 60 * 60 * 1000;
+                allJobs = data.jobs.filter(job => {
+                    const postedAt = Date.parse(job.posted_date);
+                    return Number.isFinite(postedAt) &&
+                        postedAt <= now + 24 * 60 * 60 * 1000 &&
+                        now - postedAt <= maxAgeMs;
+                });
                 filteredJobs = [...allJobs];
                 
                 populateCompanyFilter();
-                renderJobs();
+                filterJobs();
                 document.getElementById('loadingState').style.display = 'none';
             } catch (error) {
                 console.error('Error loading jobs:', error);
                 document.getElementById('loadingState').innerHTML = '<p>Error loading jobs. Please try again later.</p>';
+                document.getElementById('resultsCount').textContent = 'Job listings unavailable';
+                document.getElementById('lastUpdated').textContent = 'Could not load listing data';
             }
         }
 
@@ -1169,44 +1400,79 @@
         function filterJobs() {
             const locationFilter = document.getElementById('locationFilter').value.toLowerCase();
             const companyFilter = document.getElementById('companyFilter').value;
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const searchQuery = normalizeSearchText(document.getElementById('searchInput').value);
+            const searchTerms = searchQuery.split(' ').filter(Boolean);
+            const selectedDate = document.getElementById('postedDateFilter').value;
+            const dateMatchMode = document.getElementById('dateMatchFilter').value;
+
+            function normalizeSearchText(value) {
+                return String(value || '')
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                    .replace(/&/g, ' and ')
+                    .replace(/[^a-z0-9]+/g, ' ')
+                    .trim()
+                    .replace(/\s+/g, ' ');
+            }
+
+            const containsWholeWord = (value, term) => {
+                const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                return new RegExp(`(?:^|[^a-z0-9])${escapedTerm}(?:$|[^a-z0-9])`, 'i').test(value);
+            };
+
+            const containsSearchTerm = (value, term) =>
+                value.split(/\s+/).some(word => word.startsWith(term));
+
+            const getJobDate = value => {
+                const dateValue = String(value || '');
+                const isoDate = dateValue.match(/^\d{4}-\d{2}-\d{2}/);
+                if (isoDate) return isoDate[0];
+
+                const timestamp = Date.parse(dateValue);
+                if (!Number.isFinite(timestamp)) return '';
+                const date = new Date(timestamp);
+                return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
+            };
 
             filteredJobs = allJobs.filter(job => {
-                const location = job.location.toLowerCase();
+                const location = String(job.location || '').toLowerCase();
                 
                 // Location filter
                 let locationMatch = true;
                 if (locationFilter !== 'all') {
                     if (locationFilter === 'remote') {
-                        locationMatch = location.includes('remote') && 
-                                      !location.includes('remote,') &&
-                                      !location.match(/remote.*(us|uk|india|usa)/);
+                        locationMatch = containsWholeWord(location, 'remote') &&
+                                      (/^\s*remote\s*$/.test(location) ||
+                                       containsWholeWord(location, 'global') ||
+                                       containsWholeWord(location, 'worldwide') ||
+                                       containsWholeWord(location, 'anywhere'));
                     } else if (locationFilter === 'remote-us') {
-                        locationMatch = location.includes('remote') && 
-                                      (location.includes('us') || location.includes('usa') || 
-                                       location.includes('united states') || location.includes('america'));
+                        locationMatch = containsWholeWord(location, 'remote') &&
+                                      (containsWholeWord(location, 'us') || containsWholeWord(location, 'usa') ||
+                                       containsWholeWord(location, 'united states') || containsWholeWord(location, 'america'));
                     } else if (locationFilter === 'remote-uk') {
-                        locationMatch = location.includes('remote') && 
-                                      (location.includes('uk') || location.includes('united kingdom'));
+                        locationMatch = containsWholeWord(location, 'remote') &&
+                                      (containsWholeWord(location, 'uk') || containsWholeWord(location, 'united kingdom'));
                     } else if (locationFilter === 'remote-india') {
-                        locationMatch = location.includes('remote') && location.includes('india');
+                        locationMatch = containsWholeWord(location, 'remote') && containsWholeWord(location, 'india');
                     } else if (locationFilter === 'us') {
-                        locationMatch = location.includes('us') || location.includes('usa') || 
-                                      location.includes('united states');
+                        locationMatch = containsWholeWord(location, 'us') || containsWholeWord(location, 'usa') ||
+                                      containsWholeWord(location, 'united states');
                     } else if (locationFilter === 'sf') {
-                        locationMatch = location.includes('san francisco') || 
-                                      location.includes('sf') || 
-                                      location.includes('bay area');
+                        locationMatch = containsWholeWord(location, 'san francisco') ||
+                                      containsWholeWord(location, 'sf') ||
+                                      containsWholeWord(location, 'bay area');
                     } else if (locationFilter === 'nyc') {
-                        locationMatch = location.includes('new york');
+                        locationMatch = containsWholeWord(location, 'new york');
                     } else if (locationFilter === 'seattle') {
-                        locationMatch = location.includes('seattle');
+                        locationMatch = containsWholeWord(location, 'seattle');
                     } else if (locationFilter === 'india') {
-                        locationMatch = location.includes('india');
+                        locationMatch = containsWholeWord(location, 'india');
                     } else if (locationFilter === 'international') {
-                        locationMatch = !location.includes('us') && 
-                                      !location.includes('usa') && 
-                                      !location.includes('united states');
+                        locationMatch = !containsWholeWord(location, 'us') &&
+                                      !containsWholeWord(location, 'usa') &&
+                                      !containsWholeWord(location, 'united states');
                     }
                 }
 
@@ -1214,11 +1480,26 @@
                 const companyMatch = companyFilter === 'all' || job.company === companyFilter;
 
                 // Search filter
-                const searchMatch = searchTerm === '' || 
-                                  job.title.toLowerCase().includes(searchTerm) ||
-                                  job.company.toLowerCase().includes(searchTerm);
+                const searchableFields = [job.title, job.company, job.location]
+                    .map(normalizeSearchText);
+                const searchMatch = searchTerms.length === 0 ||
+                    searchableFields.some(field => searchTerms.every(term => containsSearchTerm(field, term)));
+                const jobDate = getJobDate(job.posted_date);
+                const dateMatch = !selectedDate || (jobDate && (
+                    dateMatchMode === 'before' ? jobDate < selectedDate :
+                    dateMatchMode === 'after' ? jobDate > selectedDate :
+                    jobDate === selectedDate
+                ));
 
-                return locationMatch && companyMatch && searchMatch;
+                return locationMatch && companyMatch && searchMatch && dateMatch;
+            });
+
+            const sortMode = document.getElementById('sortJobs').value;
+            filteredJobs.sort((left, right) => {
+                if (sortMode === 'company') return left.company.localeCompare(right.company);
+                if (sortMode === 'title') return left.title.localeCompare(right.title);
+                const dateDifference = Date.parse(left.posted_date) - Date.parse(right.posted_date);
+                return sortMode === 'oldest' ? dateDifference : -dateDifference;
             });
 
             currentPage = 1;
@@ -1229,6 +1510,8 @@
             const container = document.getElementById('jobsContainer');
             const emptyState = document.getElementById('emptyState');
             const pagination = document.getElementById('pagination');
+            document.getElementById('resultsCount').textContent =
+                `${filteredJobs.length.toLocaleString()} ${filteredJobs.length === 1 ? 'role' : 'roles'} found`;
 
             if (filteredJobs.length === 0) {
                 container.innerHTML = '';
@@ -1438,6 +1721,18 @@
         document.getElementById('locationFilter').addEventListener('change', filterJobs);
         document.getElementById('companyFilter').addEventListener('change', filterJobs);
         document.getElementById('searchInput').addEventListener('input', filterJobs);
+        document.getElementById('postedDateFilter').addEventListener('change', filterJobs);
+        document.getElementById('dateMatchFilter').addEventListener('change', filterJobs);
+        document.getElementById('sortJobs').addEventListener('change', filterJobs);
+        document.getElementById('clearFiltersBtn').addEventListener('click', () => {
+            document.getElementById('locationFilter').value = 'all';
+            document.getElementById('companyFilter').value = 'all';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('postedDateFilter').value = '';
+            document.getElementById('dateMatchFilter').value = 'on';
+            document.getElementById('sortJobs').value = 'newest';
+            filterJobs();
+        });
 
         // Directory button handlers
         document.getElementById('jobsBtn').addEventListener('click', function() {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'episkoai-v1';
+const CACHE_NAME = 'episkoai-v10';
 const urlsToCache = [
   '/index.html',
   '/jobs_data.json',
@@ -13,11 +13,30 @@ self.addEventListener('install', event => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
+      .then(() => self.skipWaiting())
   );
 });
 
 // Fetch resources from cache or network
 self.addEventListener('fetch', event => {
+  const requestUrl = new URL(event.request.url);
+    const refreshablePath = ['/', '/index.html', '/jobs_data.json'].includes(requestUrl.pathname);
+    if (event.request.method === 'GET' &&
+      requestUrl.origin === self.location.origin &&
+      refreshablePath) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-store' })
+        .then(response => {
+          if (response.ok) {
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, response.clone()));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -60,6 +79,6 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
