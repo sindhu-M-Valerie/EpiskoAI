@@ -1,4 +1,4 @@
-const CACHE_NAME = 'episkoai-v10';
+const CACHE_NAME = 'episkoai-v11';
 const urlsToCache = [
   '/index.html',
   '/jobs_data.json',
